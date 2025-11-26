@@ -1,7 +1,7 @@
 const Clutter = imports.gi.Clutter;
 const GObject = imports.gi.GObject;
 const Pango = imports.gi.Pango;
-const Cinnamon = imports.gi.Cinnamon;
+const Laminax = imports.gi.Laminax;
 const St = imports.gi.St;
 const Params = imports.misc.params;
 
@@ -9,7 +9,7 @@ const Lang = imports.lang;
 
 var CheckBoxContainer = class {
     constructor() {
-        this.actor = new Cinnamon.GenericContainer({ y_align: St.Align.MIDDLE });
+        this.actor = new Laminax.GenericContainer({ y_align: St.Align.MIDDLE });
         this.actor.connect('get-preferred-width',
                            Lang.bind(this, this._getPreferredWidth));
         this.actor.connect('get-preferred-height',

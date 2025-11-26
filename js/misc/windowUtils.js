@@ -1,5 +1,5 @@
 const Clutter = imports.gi.Clutter;
-const Cinnamon = imports.gi.Cinnamon;
+const Laminax = imports.gi.Laminax;
 const Meta = imports.gi.Meta;
 const Main = imports.ui.main;
 

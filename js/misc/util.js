@@ -5,7 +5,7 @@
  * This file includes certain useful utility functions such as running external
  * commands. It is generally a good idea to use the functions defined here
  * instead of tapping into GLib directly since this adds some wrappers around
- * the functions that make them more Cinnamon-friendly and provides helpful
+ * the functions that make them more Laminax-friendly and provides helpful
  * error messages.
  */
 
@@ -123,7 +123,7 @@ var subprocess_callbacks = {};
 function spawn_async(args, callback) {
     subprocess_id++;
     subprocess_callbacks[subprocess_id] = callback;
-    spawn(["cinnamon-subprocess-wrapper", subprocess_id.toString(), ...args]);
+    spawn(["Laminax-subprocess-wrapper", subprocess_id.toString(), ...args]);
 }
 
 /**

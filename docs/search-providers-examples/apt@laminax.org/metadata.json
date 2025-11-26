@@ -1,0 +1,5 @@
+{
+    "description": "Provides packages search results", 
+    "uuid": "apt@Laminax.org", 
+    "name": "APT search provider"
+}

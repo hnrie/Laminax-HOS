@@ -21,7 +21,7 @@
  */
 
 const Signals = imports.signals;
-const Cinnamon = imports.gi.Cinnamon;
+const Laminax = imports.gi.Laminax;
 const AccountsService = imports.gi.AccountsService;
 const Clutter = imports.gi.Clutter;
 const St = imports.gi.St;
@@ -38,7 +38,7 @@ const Meta = imports.gi.Meta;
 const Dialog = imports.ui.dialog;
 const Main = imports.ui.main;
 const ModalDialog = imports.ui.modalDialog;
-const CinnamonEntry = imports.ui.cinnamonEntry;
+const LaminaxEntry = imports.ui.LaminaxEntry;
 const PopupMenu = imports.ui.popupMenu;
 const UserWidget = imports.ui.userWidget;
 const Util = imports.misc.util;
@@ -254,7 +254,7 @@ var AuthenticationDialog = GObject.registerClass({
             visible: false,
             x_align: Clutter.ActorAlign.CENTER,
         });
-        CinnamonEntry.addContextMenu(this._passwordEntry);
+        LaminaxEntry.addContextMenu(this._passwordEntry);
         this._passwordEntry.clutter_text.connect('activate', this._onEntryActivate.bind(this));
         this._passwordEntry.bind_property('reactive',
             this._passwordEntry.clutter_text, 'editable',
@@ -263,7 +263,7 @@ var AuthenticationDialog = GObject.registerClass({
 
         let warningBox = new St.BoxLayout({ vertical: true });
 
-        let capsLockWarning = new CinnamonEntry.CapsLockWarning();
+        let capsLockWarning = new LaminaxEntry.CapsLockWarning();
         this._passwordEntry.bind_property('visible',
             capsLockWarning, 'visible',
             GObject.BindingFlags.SYNC_CREATE);
@@ -289,7 +289,7 @@ var AuthenticationDialog = GObject.registerClass({
 
         /* text is intentionally non-blank otherwise the height is not the same as for
          * infoMessage and errorMessageLabel - but it is still invisible because
-         * cinnamon.css sets the color to be transparent
+         * Laminax.css sets the color to be transparent
          */
         this._nullMessageLabel = new St.Label({ style_class: 'prompt-dialog-null-label' });
         this._nullMessageLabel.clutter_text.ellipsize = Pango.EllipsizeMode.NONE;
@@ -520,7 +520,7 @@ var AuthenticationDialog = GObject.registerClass({
 
         if (delay) {
             this._sessionRequestTimeoutId = GLib.timeout_add(GLib.PRIORITY_DEFAULT, delay, resetDialog);
-            GLib.Source.set_name_by_id(this._sessionRequestTimeoutId, '[cinnamon] this._sessionRequestTimeoutId');
+            GLib.Source.set_name_by_id(this._sessionRequestTimeoutId, '[Laminax] this._sessionRequestTimeoutId');
         } else {
             resetDialog();
         }
@@ -548,7 +548,7 @@ var AuthenticationDialog = GObject.registerClass({
 
 var AuthenticationAgent = class {
     constructor() {
-        this._native = new Cinnamon.PolkitAuthenticationAgent();
+        this._native = new Laminax.PolkitAuthenticationAgent();
         this._native.connect('initiate', this._onInitiate.bind(this));
         this._native.connect('cancel', this._onCancel.bind(this));
         // TODO - maybe register probably should wait until later, especially at first login?
@@ -558,7 +558,7 @@ var AuthenticationAgent = class {
 
             let procSessionId = this._native.register();
             if (procSessionId !== csSessionId) {
-                global.logWarning("Unable to register as the polkit agent for login session '%s'. Cinnamon is running under '%s'"
+                global.logWarning("Unable to register as the polkit agent for login session '%s'. Laminax is running under '%s'"
                                   .format(csSessionId, procSessionId));
                 this._native.unregister();
                 this._native = null;
@@ -568,14 +568,14 @@ var AuthenticationAgent = class {
                     return;
                 }
 
-                // Starting cinnamon over SSH can be useful when debugging and profiling. Provide a way to prevent a restart.
-                if (!GLib.getenv("CINNAMON_ALLOW_SSH")) {
-                    global.logWarning('Restarting Cinnamon in 5 seconds.');
-                    GLib.timeout_add_seconds(GLib.PRIORITY_DEFAULT, 5, () => session.RestartCinnamonLauncherRemote())
+                // Starting Laminax over SSH can be useful when debugging and profiling. Provide a way to prevent a restart.
+                if (!GLib.getenv("Laminax_ALLOW_SSH")) {
+                    global.logWarning('Restarting Laminax in 5 seconds.');
+                    GLib.timeout_add_seconds(GLib.PRIORITY_DEFAULT, 5, () => session.RestartLaminaxLauncherRemote())
                     return;
                 }
             } else {
-                global.log("Cinnamon registered as the Polkit agent for the active session (%s)".format(procSessionId));
+                global.log("Laminax registered as the Polkit agent for the active session (%s)".format(procSessionId));
             }
         } catch(e) {
             global.logWarning('Failed to register Polkit Agent', e);

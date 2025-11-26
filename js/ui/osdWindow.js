@@ -127,7 +127,7 @@ class OsdWindow extends Clutter.Actor {
             GLib.source_remove(this._hideTimeoutId);
         this._hideTimeoutId = GLib.timeout_add(
             GLib.PRIORITY_DEFAULT, HIDE_TIMEOUT, this._hide.bind(this));
-        GLib.Source.set_name_by_id(this._hideTimeoutId, '[cinnamon] this._hide');
+        GLib.Source.set_name_by_id(this._hideTimeoutId, '[Laminax] this._hide');
     }
 
     cancel() {
@@ -165,7 +165,7 @@ var OsdWindowManager = class {
         this._osdWindows = [];
 
         Main.layoutManager.connect('monitors-changed', this._layoutChanged.bind(this));
-        this._osdSettings = new Gio.Settings({ schema_id: "org.cinnamon" });
+        this._osdSettings = new Gio.Settings({ schema_id: "org.Laminax" });
         this._osdSettings.connect("changed::show-media-keys-osd", this._layoutChanged.bind(this));
 
         this._layoutChanged();

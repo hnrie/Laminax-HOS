@@ -1,0 +1,7 @@
+{
+ "uuid": "menu@Laminax.org",
+ "name": "Menu",
+ "description": "Main Laminax menu",
+ "icon": "applications-other",
+ "max-instances": -1
+}

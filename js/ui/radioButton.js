@@ -1,6 +1,6 @@
 const Clutter = imports.gi.Clutter;
 const Pango = imports.gi.Pango;
-const Cinnamon = imports.gi.Cinnamon;
+const Laminax = imports.gi.Laminax;
 const St = imports.gi.St;
 const Signals = imports.signals;
 
@@ -11,7 +11,7 @@ function RadioButtonContainer() {
 }
 RadioButtonContainer.prototype = {
     _init: function() {
-        this.actor = new Cinnamon.GenericContainer({ y_align: St.Align.MIDDLE });
+        this.actor = new Laminax.GenericContainer({ y_align: St.Align.MIDDLE });
         this.actor.connect('get-preferred-width',
                            Lang.bind(this, this._getPreferredWidth));
         this.actor.connect('get-preferred-height',

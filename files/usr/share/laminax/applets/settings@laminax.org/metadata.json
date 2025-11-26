@@ -1,0 +1,7 @@
+{
+ "uuid": "settings@Laminax.org",
+ "name": "Settings Applet",
+ "description": "Laminax Settings",
+ "icon": "preferences-desktop",
+ "max-instances": -1
+}

@@ -1,0 +1,8 @@
+prefix="/usr"
+datadir="/usr/share"
+localedir=datadir+"/locale"
+libdir="/usr/share/Laminax"
+libexecdir="/usr/share/Laminax/Laminax-menu-editor"
+PACKAGE="Laminax-menu-editor"
+VERSION="1.6.1"
+GETTEXT_PACKAGE="Laminax"

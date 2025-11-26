@@ -1,7 +1,7 @@
 // -*- mode: js; js-indent-level: 4; indent-tabs-mode: nil -*-
 /**
  * FILE:main.js
- * @short_description: This is the heart of Cinnamon, the mother of everything.
+ * @short_description: This is the heart of Laminax, the mother of everything.
  * @placesManager (PlacesManager.PlacesManager): The places manager
  * @overview (Overview.Overview): The "scale" overview
  * @expo (Expo.Expo): The "expo" overview
@@ -12,11 +12,11 @@
  * @notificationDaemon (NotificationDaemon.NotificationDaemon): The notification daemon
  * @windowAttentionHandler (WindowAttentionHandler.WindowAttentionHandler): The window attention handle
  * @screenRecorder (ScreenRecorder.ScreenRecorder): The recorder
- * @cinnamonDBusService (CinnamonDBus.Cinnamon): The cinnamon dbus object
+ * @LaminaxDBusService (LaminaxDBus.Laminax): The Laminax dbus object
  * @screenshotService (Screenshot.ScreenshotService): Implementation of gnome-shell's screenshot interface.
  * @modalCount (int): The number of modals "pushed"
  * @modalActorFocusStack (array): Array of pushed modal actors
- * @uiGroup (Cinnamon.GenericContainer): The group containing all Cinnamon and
+ * @uiGroup (Laminax.GenericContainer): The group containing all Laminax and
  * Muffin actors
  *
  * @magnifier (Magnifier.Magnifier): The magnifier
@@ -27,7 +27,7 @@
  * @layoutManager (Layout.LayoutManager): The layout manager.
  * @monitorLabeler (MonitorLabeler.MonitorLabeler): Adds labels to each monitor when configuring displays.
  * \
- * All actors that are part of the Cinnamon UI ar handled by the layout
+ * All actors that are part of the Laminax UI ar handled by the layout
  * manager, which will determine when to show and hide the actors etc.
  *
  * @panelManager (Panel.PanelManager): The panel manager.
@@ -43,13 +43,13 @@
  * manager.
  * \
  * This listens to changes in the GNOME background settings and mirrors them to
- * the Cinnamon settings, since many applications have a "Set background"
+ * the Laminax settings, since many applications have a "Set background"
  * button that modifies the GNOME background settings.
  *
  * @slideshowManager (SlideshowManager.SlideshowManager): The slideshow manager.
  * \
  * This is responsible for managing the background slideshow, since the
- * background "slideshow" is created by cinnamon changing the active background
+ * background "slideshow" is created by Laminax changing the active background
  * gsetting every x minutes.
  *
  * @keybindingManager (KeybindingManager.KeybindingManager): The keybinding manager
@@ -60,7 +60,7 @@
  * 
  * @osdWindow (OsdWindow.OsdWindow): Osd window that pops up when you use media
  * keys.
- * @tracker (Cinnamon.WindowTracker): The window tracker
+ * @tracker (Laminax.WindowTracker): The window tracker
  * @workspace_names (array): Names of workspace
  * @deskletContainer (DeskletManager.DeskletContainer): The desklet container.
  * \
@@ -72,9 +72,9 @@
  * @xlet_startup_error (boolean): Whether there was at least one xlet that did
  * not manage to load
  *
- * The main file is responsible for launching Cinnamon as well as creating its
- * components. The C part of cinnamon calls the @start() function, which then
- * initializes all of cinnamon. Most components of Cinnamon can be accessed
+ * The main file is responsible for launching Laminax as well as creating its
+ * components. The C part of Laminax calls the @start() function, which then
+ * initializes all of Laminax. Most components of Laminax can be accessed
  * through main.
  */
 
@@ -85,7 +85,7 @@ const GLib = imports.gi.GLib;
 const Gtk = imports.gi.Gtk;
 const Mainloop = imports.mainloop;
 const Meta = imports.gi.Meta;
-const Cinnamon = imports.gi.Cinnamon;
+const Laminax = imports.gi.Laminax;
 const St = imports.gi.St;
 const GObject = imports.gi.GObject;
 const XApp = imports.gi.XApp;
@@ -115,7 +115,7 @@ const LookingGlass = imports.ui.lookingGlass;
 const NetworkAgent = imports.ui.networkAgent;
 const NotificationDaemon = imports.ui.notificationDaemon;
 const WindowAttentionHandler = imports.ui.windowAttentionHandler;
-const CinnamonDBus = imports.ui.cinnamonDBus;
+const LaminaxDBus = imports.ui.LaminaxDBus;
 const Screenshot = imports.ui.screenshot;
 const ThemeManager = imports.ui.themeManager;
 const Magnifier = imports.ui.magnifier;
@@ -132,7 +132,7 @@ const InputMethod = imports.misc.inputMethod;
 const ScreenRecorder = imports.ui.screenRecorder;
 const {GesturesManager} = imports.ui.gestures.gesturesManager;
 const {MonitorLabeler} = imports.ui.monitorLabeler;
-const {CinnamonPortalHandler} = imports.misc.portalHandlers;
+const {LaminaxPortalHandler} = imports.misc.portalHandlers;
 const {EndSessionDialog} = imports.ui.endSessionDialog;;
 const {KeyboardManager} = imports.ui.keyboardManager;
 
@@ -160,8 +160,8 @@ var messageTray = null;
 var notificationDaemon = null;
 var windowAttentionHandler = null;
 var screenRecorder = null;
-var cinnamonAudioSelectionDBusService = null;
-var cinnamonDBusService = null;
+var LaminaxAudioSelectionDBusService = null;
+var LaminaxDBusService = null;
 var screenshotService = null;
 var modalCount = 0;
 var modalActorFocusStack = [];
@@ -216,8 +216,8 @@ var runState = RunState.INIT;
 
 // Override Gettext localization
 const Gettext = imports.gettext;
-Gettext.bindtextdomain('cinnamon', '/usr/share/locale');
-Gettext.textdomain('cinnamon');
+Gettext.bindtextdomain('Laminax', '/usr/share/locale');
+Gettext.textdomain('Laminax');
 const _ = Gettext.gettext;
 
 function setRunState(state) {
@@ -225,7 +225,7 @@ function setRunState(state) {
 
     if (state != oldState) {
         runState = state;
-        cinnamonDBusService.EmitRunStateChanged();
+        LaminaxDBusService.EmitRunStateChanged();
     }
 }
 
@@ -260,9 +260,9 @@ function _initUserSession() {
 }
 
 function _loadOskLayouts() {
-    _oskResource = Gio.Resource.load('%s/cinnamon-osk-layouts.gresource'.format(global.datadir));
+    _oskResource = Gio.Resource.load('%s/Laminax-osk-layouts.gresource'.format(global.datadir));
     _oskResource._register();
-    St.TextureCache.get_default().get_icon_theme().add_resource_path('/org/cinnamon/osk-layouts');
+    St.TextureCache.get_default().get_icon_theme().add_resource_path('/org/Laminax/osk-layouts');
 }
 
 function do_shutdown_sequence() {
@@ -282,7 +282,7 @@ function _reparentActor(actor, newParent) {
 /**
  * start:
  *
- * Starts cinnamon. Should not be called in JavaScript code
+ * Starts Laminax. Should not be called in JavaScript code
  */
 function start() {
     global.reparentActor = _reparentActor;
@@ -295,23 +295,23 @@ function start() {
     global.logError = _logError;
     global.log = _logInfo;
 
-    let cinnamonStartTime = new Date().getTime();
+    let LaminaxStartTime = new Date().getTime();
 
-    log(`About to start Cinnamon (${Meta.is_wayland_compositor() ? "Wayland" : "X11"} backend)`);
+    log(`About to start Laminax (${Meta.is_wayland_compositor() ? "Wayland" : "X11"} backend)`);
 
     let backend = Meta.get_backend();
 
-    // Only cinnamon2d launcher will set CINNAMON_2D - this is deliberate by the user.
-    let cinnamon_2d = GLib.getenv("CINNAMON_2D") === true;
+    // Only Laminax2d launcher will set Laminax_2D - this is deliberate by the user.
+    let Laminax_2d = GLib.getenv("Laminax_2D") === true;
     let live = false;
 
-    if (!backend.is_rendering_hardware_accelerated() || cinnamon_2d) {
-        global.logError("Cinnamon Software Rendering mode enabled");
+    if (!backend.is_rendering_hardware_accelerated() || Laminax_2d) {
+        global.logError("Laminax Software Rendering mode enabled");
         software_rendering = true;
 
         // We only warn if software_rendering is not of the user's volition.
-        if (!cinnamon_2d && GLib.file_test("/proc/cmdline", GLib.FileTest.EXISTS)) {
-            let content = Cinnamon.get_file_contents_utf8_sync("/proc/cmdline");
+        if (!Laminax_2d && GLib.file_test("/proc/cmdline", GLib.FileTest.EXISTS)) {
+            let content = Laminax.get_file_contents_utf8_sync("/proc/cmdline");
             if (content.match("boot=casper") || content.match("boot=live")) {
                 // If we're in a live session, pretend we're using hardware rendering,
                 // so all animations end up being enabled.
@@ -324,30 +324,30 @@ function start() {
     // Chain up async errors reported from C
     global.connect('notify-error', function (global, msg, detail) { notifyError(msg, detail); });
 
-    GioUnix.DesktopAppInfo.set_desktop_env('X-Cinnamon');
+    GioUnix.DesktopAppInfo.set_desktop_env('X-Laminax');
 
     // Clutter.get_default_backend().set_input_method(new InputMethod.InputMethod());
 
-    new CinnamonPortalHandler();
-    cinnamonAudioSelectionDBusService = new AudioDeviceSelection.AudioDeviceSelectionDBus();
-    cinnamonDBusService = new CinnamonDBus.CinnamonDBus();
+    new LaminaxPortalHandler();
+    LaminaxAudioSelectionDBusService = new AudioDeviceSelection.AudioDeviceSelectionDBus();
+    LaminaxDBusService = new LaminaxDBus.LaminaxDBus();
     setRunState(RunState.STARTUP);
 
     screenshotService = new Screenshot.ScreenshotService();
 
-    // Ensure CinnamonWindowTracker and CinnamonAppUsage are initialized; this will
-    // also initialize CinnamonAppSystem first.  CinnamonAppSystem
-    // needs to load all the .desktop files, and CinnamonWindowTracker
+    // Ensure LaminaxWindowTracker and LaminaxAppUsage are initialized; this will
+    // also initialize LaminaxAppSystem first.  LaminaxAppSystem
+    // needs to load all the .desktop files, and LaminaxWindowTracker
     // will use those to associate with windows.  Right now
     // the Monitor doesn't listen for installed app changes
     // and recalculate application associations, so to avoid
     // races for now we initialize it here.  It's better to
     // be predictable anyways.
-    tracker = Cinnamon.WindowTracker.get_default();
+    tracker = Laminax.WindowTracker.get_default();
 
     let startTime = new Date().getTime();
-    Cinnamon.AppSystem.get_default();
-    global.log('Cinnamon.AppSystem.get_default() started in %d ms'.format(new Date().getTime() - startTime));
+    Laminax.AppSystem.get_default();
+    global.log('Laminax.AppSystem.get_default() started in %d ms'.format(new Date().getTime() - startTime));
 
     // The stage is always covered so Clutter doesn't need to clear it; however
     // the color is used as the default contents for the Muffin root background
@@ -355,7 +355,7 @@ function start() {
     global.stage.background_color = DEFAULT_BACKGROUND_COLOR;
     global.stage.no_clear_hint = true;
 
-    _defaultCssStylesheet = global.datadir + '/theme/cinnamon.css';
+    _defaultCssStylesheet = global.datadir + '/theme/Laminax.css';
 
     soundManager = new SoundManager.SoundManager();
 
@@ -484,9 +484,9 @@ function start() {
     global.stage.connect('captured-event', _stageEventHandler);
 
     global.log('loaded at ' + _startDate);
-    log('Cinnamon started at ' + _startDate);
+    log('Laminax started at ' + _startDate);
 
-    wmSettings = new Gio.Settings({schema_id: "org.cinnamon.desktop.wm.preferences"})
+    wmSettings = new Gio.Settings({schema_id: "org.Laminax.desktop.wm.preferences"})
     workspace_names = wmSettings.get_strv("workspace-names");
 
     wmSettings.connect("changed::workspace-names", function (settings, pspec) {
@@ -530,14 +530,14 @@ function start() {
         a11yHandler = new Accessibility.A11yHandler();
 
         // We only warn if software_rendering is not of the user's volition.
-        if (software_rendering && !cinnamon_2d && !live) {
-            notifyCinnamon2d();
+        if (software_rendering && !Laminax_2d && !live) {
+            notifyLaminax2d();
         }
 
         if (xlet_startup_error)
             Mainloop.timeout_add_seconds(3, notifyXletStartupError);
 
-        let sound_settings = new Gio.Settings( {schema_id: "org.cinnamon.sounds"} );
+        let sound_settings = new Gio.Settings( {schema_id: "org.Laminax.sounds"} );
         let do_login_sound = sound_settings.get_boolean("login-enabled");
 
         // We're mostly prepared for the startup animation
@@ -559,14 +559,14 @@ function start() {
         if (do_login_sound && !global.session_running)
 		    soundManager.play('login');
 
-        // Disable panel edit mode when Cinnamon starts
+        // Disable panel edit mode when Laminax starts
         if (global.settings.get_boolean("panel-edit-mode")) {
             global.settings.set_boolean("panel-edit-mode", false);
         }
 
         global.connect('shutdown', do_shutdown_sequence);
 
-        global.log('Cinnamon took %d ms to start'.format(new Date().getTime() - cinnamonStartTime));
+        global.log('Laminax took %d ms to start'.format(new Date().getTime() - LaminaxStartTime));
     }).catch(error => {
         global.logError(`promise failed: ${error}`);
     });
@@ -580,10 +580,10 @@ function updateAnimationsEnabled() {
         `Animations: ${animations_enabled ? "enabled" : "disabled"} ` +
         `(${software_rendering ? "software rendering" : "hardware rendering"}, ` +
         `${settings_enabled ? "enabled" : "disabled"} in settings)`);
-    cinnamonDBusService.notifyAnimationsEnabled();
+    LaminaxDBusService.notifyAnimationsEnabled();
 }
 
-function notifyCinnamon2d() {
+function notifyLaminax2d() {
     let icon = new St.Icon({ icon_name: 'driver-manager',
                              icon_type: St.IconType.FULLCOLOR,
                              icon_size: 36 });
@@ -594,7 +594,7 @@ function notifyCinnamon2d() {
                        _("You may experience poor performance and high CPU usage."),
                        icon);
 
-    if (GLib.file_test("/usr/bin/cinnamon-driver-manager", GLib.FileTest.EXISTS)) {
+    if (GLib.file_test("/usr/bin/Laminax-driver-manager", GLib.FileTest.EXISTS)) {
         notification.addButton("driver-manager", _("Launch Driver Manager"));
         notification.connect("action-invoked", this.launchDriverManager);
     }
@@ -604,10 +604,10 @@ function notifyXletStartupError() {
     let icon = new St.Icon({ icon_name: 'dialog-warning',
                              icon_type: St.IconType.FULLCOLOR,
                              icon_size: 36 });
-    warningNotify(_("Problems during Cinnamon startup"),
-                  _("Cinnamon started successfully, but one or more applets, desklets or extensions failed to load.\n\n") +
-                  _("Check your system log and the Cinnamon LookingGlass log for any issues.  ") +
-                  _("You can disable the offending extension(s) in Cinnamon Settings to prevent this message from recurring.  ") +
+    warningNotify(_("Problems during Laminax startup"),
+                  _("Laminax started successfully, but one or more applets, desklets or extensions failed to load.\n\n") +
+                  _("Check your system log and the Laminax LookingGlass log for any issues.  ") +
+                  _("You can disable the offending extension(s) in Laminax Settings to prevent this message from recurring.  ") +
                   _("Please contact the developer."), icon);
 
 }
@@ -756,7 +756,7 @@ function moveWindowToNewWorkspace(metaWindow, switchToNewWorkspace) {
 /**
  * getThemeStylesheet:
  *
- * Get the theme CSS file that Cinnamon will load
+ * Get the theme CSS file that Laminax will load
  *
  * Returns (string): A file path that contains the theme CSS,
  *                   null if using the default
@@ -771,7 +771,7 @@ function getThemeStylesheet()
  * @cssStylesheet (string): A file path that contains the theme CSS,
  *                         set it to null to use the default
  *
- * Set the theme CSS file that Cinnamon will load
+ * Set the theme CSS file that Laminax will load
  */
 function setThemeStylesheet(cssStylesheet)
 {
@@ -831,7 +831,7 @@ function criticalNotify(msg, details, icon) {
 }
 
 function launchDriverManager() {
-    Util.spawnCommandLineAsync("cinnamon-driver-manager", null, null);
+    Util.spawnCommandLineAsync("Laminax-driver-manager", null, null);
 }
 
 /**
@@ -853,7 +853,7 @@ function warningNotify(msg, details, icon) {
  * @msg (string): An error message
  * @details (string): Additional information
  *
- * See cinnamon_global_notify_problem().
+ * See Laminax_global_notify_problem().
  */
 function notifyError(msg, details) {
     // Also print to stderr so it's logged somewhere
@@ -1188,7 +1188,7 @@ function _stageEventHandler(actor, event) {
 
     let symbol = event.get_key_symbol();
     let keyCode = event.get_key_code();
-    let modifierState = Cinnamon.get_event_state(event);
+    let modifierState = Laminax.get_event_state(event);
 
     // This relies on the fact that Clutter.ModifierType is the same as Gdk.ModifierType
     let action = global.display.get_keybinding_action(keyCode, modifierState);
@@ -1280,7 +1280,7 @@ function pushModal(actor, timestamp, options) {
         Meta.disable_unredirect_for_display(global.display);
     }
 
-    global.set_stage_input_mode(Cinnamon.StageInputMode.FULLSCREEN);
+    global.set_stage_input_mode(Laminax.StageInputMode.FULLSCREEN);
 
     modalCount += 1;
     let actorDestroyId = actor.connect('destroy', function() {
@@ -1329,7 +1329,7 @@ function popModal(actor, timestamp) {
     if (focusIndex < 0) {
         global.stage.set_key_focus(null);
         global.end_modal(timestamp);
-        global.set_stage_input_mode(Cinnamon.StageInputMode.NORMAL);
+        global.set_stage_input_mode(Laminax.StageInputMode.NORMAL);
 
         throw new Error('incorrect pop');
     }
@@ -1362,7 +1362,7 @@ function popModal(actor, timestamp) {
         return;
 
     global.end_modal(timestamp);
-    global.set_stage_input_mode(Cinnamon.StageInputMode.NORMAL);
+    global.set_stage_input_mode(Laminax.StageInputMode.NORMAL);
 
     layoutManager.updateChrome(true);
 
@@ -1609,14 +1609,14 @@ function getTabList(workspaceOpt) {
     return windows;
 }
 
-function restartCinnamon(showOsd = false) {
+function restartLaminax(showOsd = false) {
     if (Meta.is_wayland_compositor()) {
-        global.logWarning("Cinnamon restart not supported with Wayland");
+        global.logWarning("Laminax restart not supported with Wayland");
         return;
     }
     global.display.connect("show-restart-message", () => {
         if (showOsd) {
-            let dialog = new ModalDialog.InfoOSD(_("Restarting Cinnamon..."));
+            let dialog = new ModalDialog.InfoOSD(_("Restarting Laminax..."));
             dialog.actor.add_style_class_name('restart-osd');
             dialog.show();
 

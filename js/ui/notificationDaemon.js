@@ -4,7 +4,7 @@ const Clutter = imports.gi.Clutter;
 const Gio = imports.gi.Gio;
 const GLib = imports.gi.GLib;
 const Lang = imports.lang;
-const Cinnamon = imports.gi.Cinnamon;
+const Laminax = imports.gi.Laminax;
 const St = imports.gi.St;
 
 const Config = imports.misc.config;
@@ -117,7 +117,7 @@ NotificationDaemon.prototype = {
         Main.statusIconDispatcher.connect('message-icon-removed', Lang.bind(this, this._onTrayIconRemoved));
 
 // Settings
-        this.settings = new Gio.Settings({ schema_id: "org.cinnamon.desktop.notifications" });
+        this.settings = new Gio.Settings({ schema_id: "org.Laminax.desktop.notifications" });
         function setting(self, source, type, camelCase, dashed) {
             function updater() { self[camelCase] = source["get_"+type](dashed); }
             source.connect('changed::'+dashed, updater);
@@ -126,7 +126,7 @@ NotificationDaemon.prototype = {
         setting(this, this.settings, "boolean", "removeOld", "remove-old");
         setting(this, this.settings, "int", "timeout", "timeout");
 
-        Cinnamon.WindowTracker.get_default().connect('notify::focus-app',
+        Laminax.WindowTracker.get_default().connect('notify::focus-app',
             Lang.bind(this, this._onFocusAppChanged));
         Main.overview.connect('hidden',
             Lang.bind(this, this._onFocusAppChanged));
@@ -147,7 +147,7 @@ NotificationDaemon.prototype = {
             if (appIcon.startsWith("file://")) {
                 return textureCache.load_uri_async(appIcon, size, size);
             } else {
-                // Cinnamon prefers symbolic icons due to theming. If an icon
+                // Laminax prefers symbolic icons due to theming. If an icon
                 // name is specified, try to load it in symbolic. If that fails,
                 // St reverts to fullcolor anyway.
                 return new St.Icon({ icon_name: appIcon,
@@ -285,7 +285,7 @@ NotificationDaemon.prototype = {
             hints[hint] = hints[hint].deep_unpack();
         }
 
-        // Special Cinnamon specific rewrites for message summaries on the fly.
+        // Special Laminax specific rewrites for message summaries on the fly.
         let rewrites = rewriteRules[appName];
         if (rewrites) {
             for (let i = 0; i < rewrites.length; i++) {
@@ -581,7 +581,7 @@ NotificationDaemon.prototype = {
         if (!this._sources.length)
             return;
 
-        let tracker = Cinnamon.WindowTracker.get_default();
+        let tracker = Laminax.WindowTracker.get_default();
         if (!tracker.focus_app)
             return;
 
@@ -675,12 +675,12 @@ Source.prototype = {
     _getApp: function() {
         let app;
 
-        app = Cinnamon.WindowTracker.get_default().get_app_from_pid(this.pid);
+        app = Laminax.WindowTracker.get_default().get_app_from_pid(this.pid);
         if (app != null)
             return app;
 
         if (this.trayIcon) {
-            app = Cinnamon.AppSystem.get_default().lookup_wmclass(this.trayIcon.wmclass);
+            app = Laminax.AppSystem.get_default().lookup_wmclass(this.trayIcon.wmclass);
             if (app != null)
                 return app;
         }

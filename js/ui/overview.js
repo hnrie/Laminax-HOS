@@ -6,7 +6,7 @@ const Mainloop = imports.mainloop;
 const Signals = imports.signals;
 const Lang = imports.lang;
 const St = imports.gi.St;
-const Cinnamon = imports.gi.Cinnamon;
+const Laminax = imports.gi.Laminax;
 
 const Main = imports.ui.main;
 const MessageTray = imports.ui.messageTray;
@@ -373,14 +373,14 @@ Overview.prototype = {
                 Main.popModal(this._group);
                 this._modal = false;
             }
-            global.stage_input_mode = Cinnamon.StageInputMode.FULLSCREEN;
+            global.stage_input_mode = Laminax.StageInputMode.FULLSCREEN;
         } else {
             if (this._modal) {
                 Main.popModal(this._group);
                 this._modal = false;
             }
-            else if (global.stage_input_mode == Cinnamon.StageInputMode.FULLSCREEN)
-                global.stage_input_mode = Cinnamon.StageInputMode.NORMAL;
+            else if (global.stage_input_mode == Laminax.StageInputMode.FULLSCREEN)
+                global.stage_input_mode = Laminax.StageInputMode.NORMAL;
         }
     },
 

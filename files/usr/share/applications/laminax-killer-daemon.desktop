@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Laminax Killer Daemon
+Comment=Restarts Laminax and Nemo when a key combination is pressed
+Icon=reload
+Exec=Laminax-killer-daemon
+Terminal=false
+Type=Application
+NoDisplay=true

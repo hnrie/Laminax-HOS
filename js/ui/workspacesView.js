@@ -2,7 +2,7 @@
 
 const Clutter = imports.gi.Clutter;
 const Lang = imports.lang;
-const Cinnamon = imports.gi.Cinnamon;
+const Laminax = imports.gi.Laminax;
 const St = imports.gi.St;
 const Signals = imports.signals;
 
@@ -123,7 +123,7 @@ WorkspacesView.prototype = {
         if (this._keyIsHandled)
             return false;
 
-        let modifiers = Cinnamon.get_event_state(event);
+        let modifiers = Laminax.get_event_state(event);
         let symbol = event.get_key_symbol();
 
         switch (symbol) {

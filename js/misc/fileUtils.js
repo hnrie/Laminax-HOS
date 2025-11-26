@@ -19,7 +19,7 @@ var importNames = [
     'byteArray',
     'cairoNative'
 ];
-var cinnamonImportNames = [
+var LaminaxImportNames = [
     'ui',
     'misc',
     'perf'
@@ -239,14 +239,14 @@ function createExports({path, dir, meta, type, file, size, JS, returnIndex, reje
 }
 
 function requireModule(path, dir, meta, type, async = false, returnIndex = false) {
-    // Allow passing through native bindings, e.g. const Cinnamon = require('gi.Cinnamon');
+    // Allow passing through native bindings, e.g. const Laminax = require('gi.Laminax');
     // Check if this is a GI import
     if (path.substr(0, 3) === 'gi.') {
         return imports.gi[path.substr(3, path.length)];
     }
-    // Check if this is a Cinnamon import
+    // Check if this is a Laminax import
     let importPrefix = path.split('.')[0];
-    if (cinnamonImportNames.indexOf(importPrefix) > -1
+    if (LaminaxImportNames.indexOf(importPrefix) > -1
         && path.substr(0, importPrefix.length + 1) === `${importPrefix}.`) {
         return imports[importPrefix][path.substr(importPrefix.length + 1, path.length)];
     }

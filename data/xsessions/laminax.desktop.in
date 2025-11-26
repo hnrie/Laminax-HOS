@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Laminax
+Comment=This session logs you into Laminax
+Exec=Laminax-session-Laminax
+TryExec=@bindir@/Laminax
+Icon=
+Type=Application
+

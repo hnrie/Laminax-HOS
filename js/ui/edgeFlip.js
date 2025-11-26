@@ -4,7 +4,7 @@ const Clutter = imports.gi.Clutter;
 const St = imports.gi.St;
 const Mainloop = imports.mainloop;
 const Lang = imports.lang;
-const Cinnamon = imports.gi.Cinnamon;
+const Laminax = imports.gi.Laminax;
 
 var EdgeFlipper = class {
     constructor(side, func) {

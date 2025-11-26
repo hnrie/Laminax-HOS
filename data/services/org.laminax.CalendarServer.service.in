@@ -1,0 +1,3 @@
+[D-BUS Service]
+Name=org.Laminax.CalendarServer
+Exec=@bindir@/Laminax-calendar-server

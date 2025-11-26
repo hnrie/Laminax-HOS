@@ -13,7 +13,7 @@ var BackgroundManager = class {
             return
 
         this._gnomeSettings = new Gio.Settings({ schema_id: "org.gnome.desktop.background" });
-        this._cinnamonSettings = new Gio.Settings({ schema_id: "org.cinnamon.desktop.background" });
+        this._LaminaxSettings = new Gio.Settings({ schema_id: "org.Laminax.desktop.background" });
 
         this.color_shading_type = this._gnomeSettings.get_string("color-shading-type");
         this._gnomeSettings.connect("changed::color-shading-type", Lang.bind(this, this._onColorShadingTypeChanged));
@@ -56,10 +56,10 @@ var BackgroundManager = class {
         let oldValue = this.color_shading_type
         let newValue = this._gnomeSettings.get_string(key);
         if (oldValue != newValue) {
-            let cinnamonValue = this._cinnamonSettings.get_string(key);
-            if (cinnamonValue != newValue) {
+            let LaminaxValue = this._LaminaxSettings.get_string(key);
+            if (LaminaxValue != newValue) {
                 if (LOGGING) global.log("BackgroundManager: %s changed (%s --> %s)".format(key, oldValue, newValue));
-                this._cinnamonSettings.set_string(key, newValue);
+                this._LaminaxSettings.set_string(key, newValue);
             }
             this.color_shading_type = newValue;
         }
@@ -69,10 +69,10 @@ var BackgroundManager = class {
         let oldValue = this.picture_options
         let newValue = this._gnomeSettings.get_string(key);
         if (oldValue != newValue) {
-            let cinnamonValue = this._cinnamonSettings.get_string(key);
-            if (cinnamonValue != newValue) {
+            let LaminaxValue = this._LaminaxSettings.get_string(key);
+            if (LaminaxValue != newValue) {
                 if (LOGGING) global.log("BackgroundManager: %s changed (%s --> %s)".format(key, oldValue, newValue));
-                this._cinnamonSettings.set_string(key, newValue);
+                this._LaminaxSettings.set_string(key, newValue);
             }
             this.picture_options = newValue;
         }
@@ -82,10 +82,10 @@ var BackgroundManager = class {
         let oldValue = this.picture_uri
         let newValue = this._gnomeSettings.get_string(key);
         if (oldValue != newValue) {
-            let cinnamonValue = this._cinnamonSettings.get_string(key);
-            if (cinnamonValue != newValue) {
+            let LaminaxValue = this._LaminaxSettings.get_string(key);
+            if (LaminaxValue != newValue) {
                 if (LOGGING) global.log("BackgroundManager: %s changed (%s --> %s)".format(key, oldValue, newValue));
-                this._cinnamonSettings.set_string(key, newValue);
+                this._LaminaxSettings.set_string(key, newValue);
             }
             this.picture_uri = newValue;
         }
@@ -95,10 +95,10 @@ var BackgroundManager = class {
         let oldValue = this.primary_color
         let newValue = this._gnomeSettings.get_string(key);
         if (oldValue != newValue) {
-            let cinnamonValue = this._cinnamonSettings.get_string(key);
-            if (cinnamonValue != newValue) {
+            let LaminaxValue = this._LaminaxSettings.get_string(key);
+            if (LaminaxValue != newValue) {
                 if (LOGGING) global.log("BackgroundManager: %s changed (%s --> %s)".format(key, oldValue, newValue));
-                this._cinnamonSettings.set_string(key, newValue);
+                this._LaminaxSettings.set_string(key, newValue);
             }
             this.primary_color = newValue;
         }
@@ -108,10 +108,10 @@ var BackgroundManager = class {
         let oldValue = this.secondary_color
         let newValue = this._gnomeSettings.get_string(key);
         if (oldValue != newValue) {
-            let cinnamonValue = this._cinnamonSettings.get_string(key);
-            if (cinnamonValue != newValue) {
+            let LaminaxValue = this._LaminaxSettings.get_string(key);
+            if (LaminaxValue != newValue) {
                 if (LOGGING) global.log("BackgroundManager: %s changed (%s --> %s)".format(key, oldValue, newValue));
-                this._cinnamonSettings.set_string(key, newValue);
+                this._LaminaxSettings.set_string(key, newValue);
             }
             this.secondary_color = newValue;
         }
@@ -121,10 +121,10 @@ var BackgroundManager = class {
         let oldValue = this.picture_opacity
         let newValue = this._gnomeSettings.get_int(key);
         if (oldValue != newValue) {
-            let cinnamonValue = this._cinnamonSettings.get_int(key);
-            if (cinnamonValue != newValue) {
+            let LaminaxValue = this._LaminaxSettings.get_int(key);
+            if (LaminaxValue != newValue) {
                 if (LOGGING) global.log("BackgroundManager: %s changed (%s --> %s)".format(key, oldValue, newValue));
-                this._cinnamonSettings.set_int(key, newValue);
+                this._LaminaxSettings.set_int(key, newValue);
             }
             this.picture_opacity = newValue;
         }

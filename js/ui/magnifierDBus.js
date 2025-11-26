@@ -101,11 +101,11 @@ const ZoomRegionIface =
 // '/org/gnome/Magnifier/ZoomRegion/zoomer1', etc.
 let _zoomRegionInstanceCount = 0;
 
-function CinnamonMagnifier() {
+function LaminaxMagnifier() {
     this._init();
 }
 
-CinnamonMagnifier.prototype = {
+LaminaxMagnifier.prototype = {
     _init: function() {
         this._zoomers = {};
 
@@ -172,7 +172,7 @@ CinnamonMagnifier.prototype = {
         let objectPath = ZOOM_SERVICE_PATH + '/zoomer' + _zoomRegionInstanceCount;
         _zoomRegionInstanceCount++;
 
-        let zoomRegionProxy = new CinnamonMagnifierZoomRegion(objectPath, realZoomRegion);
+        let zoomRegionProxy = new LaminaxMagnifierZoomRegion(objectPath, realZoomRegion);
         let proxyAndZoomRegion = {};
         proxyAndZoomRegion.proxy = zoomRegionProxy;
         proxyAndZoomRegion.zoomRegion = realZoomRegion;
@@ -222,7 +222,7 @@ CinnamonMagnifier.prototype = {
                 // Got a ZoomRegion with no DBus proxy, make one.
                 let newPath =  ZOOM_SERVICE_PATH + '/zoomer' + _zoomRegionInstanceCount;
                 _zoomRegionInstanceCount++;
-                let zoomRegionProxy = new CinnamonMagnifierZoomRegion(newPath, aZoomRegion);
+                let zoomRegionProxy = new LaminaxMagnifierZoomRegion(newPath, aZoomRegion);
                 let proxyAndZoomer = {};
                 proxyAndZoomer.proxy = zoomRegionProxy;
                 proxyAndZoomer.zoomRegion = aZoomRegion;
@@ -334,16 +334,16 @@ CinnamonMagnifier.prototype = {
 };
 
 /**
- * CinnamonMagnifierZoomRegion:
+ * LaminaxMagnifierZoomRegion:
  * Object that implements the DBus ZoomRegion interface.
  * @zoomerObjectPath:   String that is the path to a DBus ZoomRegion.
  * @zoomRegion:         The actual zoom region associated with the object path.
  */
-function CinnamonMagnifierZoomRegion(zoomerObjectPath, zoomRegion) {
+function LaminaxMagnifierZoomRegion(zoomerObjectPath, zoomRegion) {
     this._init(zoomerObjectPath, zoomRegion);
 }
 
-CinnamonMagnifierZoomRegion.prototype = {
+LaminaxMagnifierZoomRegion.prototype = {
     _init: function(zoomerObjectPath, zoomRegion) {
         this._zoomRegion = zoomRegion;
 

@@ -1,0 +1,6 @@
+{
+ "uuid": "sound@Laminax.org",
+ "name": "Sound",
+ "description": "A Laminax applet to control sound and music",
+ "icon": "cs-sound"
+}

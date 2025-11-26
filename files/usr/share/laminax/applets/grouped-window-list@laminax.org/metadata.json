@@ -1,0 +1,8 @@
+{
+    "name": "Grouped window list",
+    "role": "panellauncher, windowattentionhandler",
+    "uuid": "grouped-window-list@Laminax.org",
+    "description": "Main Laminax window list with app grouping",
+    "icon": "cs-windows",
+    "max-instances": -1
+}

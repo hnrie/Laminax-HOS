@@ -3,7 +3,7 @@
 const Clutter = imports.gi.Clutter;
 const St = imports.gi.St;
 const Atk = imports.gi.Atk;
-const Cinnamon = imports.gi.Cinnamon;
+const Laminax = imports.gi.Laminax;
 const Signals = imports.signals;
 const GObject = imports.gi.GObject;
 const Gio = imports.gi.Gio;
@@ -40,7 +40,7 @@ var State = {
  * @contentLayout (St.BoxLayout): The box containing the contents of the modal
  * dialog (excluding the buttons)
  *
- * The #ModalDialog object is a generic popup dialog in Cinnamon. It can either
+ * The #ModalDialog object is a generic popup dialog in Laminax. It can either
  * be created directly and then manipulated afterwards, or used as a base class
  * for more sophisticated modal dialog.
  *
@@ -61,8 +61,8 @@ var ModalDialog = GObject.registerClass({
     /**
      * _init:
      * @params (JSON): parameters for the modal dialog. Options include
-     * @cinnamonReactive, which determines whether the modal dialog should
-     * block Cinnamon input, and @styleClass, which is the style class the
+     * @LaminaxReactive, which determines whether the modal dialog should
+     * block Laminax input, and @styleClass, which is the style class the
      * modal dialog should use.
      */
     _init(params) {
@@ -73,14 +73,14 @@ var ModalDialog = GObject.registerClass({
             accessible_role: Atk.Role.DIALOG,
         });
         params = Params.parse(params, {
-            cinnamonReactive: Main.virtualKeyboardManager.enabled,
+            LaminaxReactive: Main.virtualKeyboardManager.enabled,
             styleClass: null,
             destroyOnClose: true,
         });
 
         this._state = State.CLOSED;
         this._hasModal = false;
-        this._cinnamonReactive = params.cinnamonReactive;
+        this._LaminaxReactive = params.LaminaxReactive;
         this._destroyOnClose = params.destroyOnClose;
 
         Main.uiGroup.add_actor(this);
@@ -112,7 +112,7 @@ var ModalDialog = GObject.registerClass({
             enableRadialEffect = false;
         }
 
-        if (!this._cinnamonReactive) {
+        if (!this._LaminaxReactive) {
             this._lightbox = new Lightbox.Lightbox(this,
                                                    { inhibitEvents: true,
                                                      radialEffect: enableRadialEffect });
@@ -297,7 +297,7 @@ var ModalDialog = GObject.registerClass({
 
         this._hasModal = false;
 
-        if (!this._cinnamonReactive)
+        if (!this._LaminaxReactive)
             this._eventBlocker.raise_top();
     }
 
@@ -324,7 +324,7 @@ var ModalDialog = GObject.registerClass({
             focus.grab_key_focus();
         }
 
-        if (!this._cinnamonReactive)
+        if (!this._LaminaxReactive)
             this._eventBlocker.lower_bottom();
         return true;
     }

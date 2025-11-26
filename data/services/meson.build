@@ -1,8 +1,8 @@
 service_files = [
-  'org.cinnamon.CalendarServer.service',
-  'org.Cinnamon.HotplugSniffer.service',
-  'org.Cinnamon.Melange.service',
-  'org.Cinnamon.Slideshow.service',
+  'org.Laminax.CalendarServer.service',
+  'org.Laminax.HotplugSniffer.service',
+  'org.Laminax.Melange.service',
+  'org.Laminax.Slideshow.service',
 ]
 
 foreach service_file : service_files

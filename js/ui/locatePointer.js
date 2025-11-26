@@ -5,8 +5,8 @@ const Ripples = imports.ui.ripples;
 const Lang = imports.lang;
 const Main = imports.ui.main;
 
-const LOCATE_POINTER_ENABLED_SCHEMA = "org.cinnamon.desktop.peripherals.mouse"
-const LOCATE_POINTER_SCHEMA = "org.cinnamon.muffin"
+const LOCATE_POINTER_ENABLED_SCHEMA = "org.Laminax.desktop.peripherals.mouse"
+const LOCATE_POINTER_SCHEMA = "org.Laminax.muffin"
 
 var locatePointer = class {
     constructor() {

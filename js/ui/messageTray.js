@@ -8,7 +8,7 @@ const Atk = imports.gi.Atk;
 const Lang = imports.lang;
 const Mainloop = imports.mainloop;
 const Pango = imports.gi.Pango;
-const Cinnamon = imports.gi.Cinnamon;
+const Laminax = imports.gi.Laminax;
 const Signals = imports.signals;
 const St = imports.gi.St;
 
@@ -144,7 +144,7 @@ URLHighlighter.prototype = {
 
             let urlId = this._findUrlAtPos(event);
             if (urlId != -1 && !this._cursorChanged) {
-                global.set_cursor(Cinnamon.Cursor.POINTING_HAND);
+                global.set_cursor(Laminax.Cursor.POINTING_HAND);
                 this._cursorChanged = true;
             } else if (urlId == -1) {
                 global.unset_cursor();
@@ -765,7 +765,7 @@ MessageTray.prototype = {
         Main.layoutManager.addChrome(this._notificationBin);
 
         // Settings
-        this.settings = new Gio.Settings({ schema_id: "org.cinnamon.desktop.notifications" });
+        this.settings = new Gio.Settings({ schema_id: "org.Laminax.desktop.notifications" });
         function setting(self, source, camelCase, dashed) {
             function updater() { self[camelCase] = source.get_boolean(dashed); }
             source.connect('changed::' + dashed, updater);

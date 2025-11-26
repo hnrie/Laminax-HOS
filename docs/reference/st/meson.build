@@ -1,8 +1,8 @@
 gnome.gtkdoc(
-    'cinnamon-st',
+    'Laminax-st',
     mode: 'xml',
-    main_xml: 'cinnamon-st-docs.sgml',
-    gobject_typesfile: 'cinnamon-st.types',
+    main_xml: 'Laminax-st-docs.sgml',
+    gobject_typesfile: 'Laminax-st.types',
     dependencies: [st_dep],
     src_dir: [
         join_paths(meson.project_source_root(), 'src', 'st'),

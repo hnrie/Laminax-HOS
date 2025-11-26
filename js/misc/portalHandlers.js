@@ -2,7 +2,7 @@
 
 const Gio = imports.gi.Gio;
 const GLib = imports.gi.GLib;
-const Cinnamon = imports.gi.Cinnamon;
+const Laminax = imports.gi.Laminax;
 
 const XdgAppState = {
     BACKGROUND: 0, // window.is_hidden
@@ -10,9 +10,9 @@ const XdgAppState = {
     ACTIVE: 2  // window focused
 }
 
-const CinnamonPortalIface =
+const LaminaxPortalIface =
     '<node> \
-        <interface name="org.cinnamon.PortalHandlers"> \
+        <interface name="org.Laminax.PortalHandlers"> \
             <method name="GetAppStates"> \
                 <arg type="a{sv}" direction="out" name="apps" /> \
             </method> \
@@ -21,14 +21,14 @@ const CinnamonPortalIface =
     </node>';
 
 
-var CinnamonPortalHandler = class CinnamonPortalHandler {
+var LaminaxPortalHandler = class LaminaxPortalHandler {
     constructor() {
-        this._dbusImpl = Gio.DBusExportedObject.wrapJSObject(CinnamonPortalIface, this);
-        this._dbusImpl.export(Gio.DBus.session, '/org/Cinnamon');
+        this._dbusImpl = Gio.DBusExportedObject.wrapJSObject(LaminaxPortalIface, this);
+        this._dbusImpl.export(Gio.DBus.session, '/org/Laminax');
 
         this.running_apps = {};
-        Cinnamon.AppSystem.get_default().connect("app-state-changed", () => this.EmitRunningAppsChanged());
-        Cinnamon.WindowTracker.get_default().connect("notify::focus-app", () => this.EmitRunningAppsChanged());
+        Laminax.AppSystem.get_default().connect("app-state-changed", () => this.EmitRunningAppsChanged());
+        Laminax.WindowTracker.get_default().connect("notify::focus-app", () => this.EmitRunningAppsChanged());
     }
 
     EmitRunningAppsChanged() {
@@ -44,11 +44,11 @@ var CinnamonPortalHandler = class CinnamonPortalHandler {
     }
 
     /* org.freedesktop.impl.portal.Background.GetAppState:
-     * A big issue right now is that in X11, CinnamonAppSystem stops caring
+     * A big issue right now is that in X11, LaminaxAppSystem stops caring
      * about an app if its windows are closed or *hidden* to tray, so our list
      * here won't contain any background apps until this behavior is addressed. */
     GetAppStates() {
-        const appsys = Cinnamon.AppSystem.get_default();
+        const appsys = Laminax.AppSystem.get_default();
         const running = appsys.get_running();
         const apps = {}
 

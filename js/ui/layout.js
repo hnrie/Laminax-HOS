@@ -2,10 +2,10 @@
 
 /**
  * FILE:layout.js
- * @short_description: The file responsible for managing Cinnamon chrome
+ * @short_description: The file responsible for managing Laminax chrome
  */
 const Clutter = imports.gi.Clutter;
-const Cinnamon = imports.gi.Cinnamon;
+const Laminax = imports.gi.Laminax;
 const GObject = imports.gi.GObject;
 const GLib = imports.gi.GLib;
 const Gio = imports.gi.Gio;
@@ -261,10 +261,10 @@ class UiActor extends St.Widget {
 /**
  * #LayoutManager
  *
- * @short_description: Manager of Cinnamon Chrome
+ * @short_description: Manager of Laminax Chrome
  *
  * Creates and manages the Chrome container which holds
- * all of the Cinnamon UI actors.
+ * all of the Laminax UI actors.
  */
 function LayoutManager() {
     this._init.apply(this, arguments);
@@ -661,7 +661,7 @@ Signals.addSignalMethods(LayoutManager.prototype);
 
 
 
-// This manages Cinnamon "chrome"; the UI that's visible in the
+// This manages Laminax "chrome"; the UI that's visible in the
 // normal mode (ie, outside the Overview), that surrounds the main
 // workspace content.
 const defaultParams = {
@@ -835,7 +835,7 @@ Chrome.prototype = {
             let actorData = this._trackedActors[i], visible;
             if (!actorData.isToplevel)
                 continue;
-            else if (global.stage_input_mode == Cinnamon.StageInputMode.FULLSCREEN) {
+            else if (global.stage_input_mode == Laminax.StageInputMode.FULLSCREEN) {
                 let monitor = this.findMonitorForActor(actorData.actor);
 
                 if (global.display.get_n_monitors() == 1 || !monitor.inFullscreen) {

@@ -1,0 +1,6 @@
+{
+ "uuid": "power@Laminax.org",
+ "name": "Power Manager",
+ "description": "Laminax power management applet",
+ "icon": "cs-power"
+}

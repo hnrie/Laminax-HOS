@@ -15,7 +15,7 @@ const Flashspot = imports.ui.flashspot;
 const ModalDialog = imports.ui.modalDialog;
 const Signals = imports.signals;
 const Gettext = imports.gettext;
-const Cinnamon = imports.gi.Cinnamon;
+const Laminax = imports.gi.Laminax;
 const SignalManager = imports.misc.signalManager;
 
 var AllowedLayout = {  // the panel layout that an applet is suitable for
@@ -161,9 +161,9 @@ var Applet = class Applet {
 
         this.panel = null;
         this._order = 0;        // Defined in gsettings, this is the order of the applet within a panel location.
-                                // This value is set by Cinnamon when loading/listening_to gsettings.
+                                // This value is set by Laminax when loading/listening_to gsettings.
         this._newOrder = null;      //  Used when moving an applet
-        this._panelLocation = null;     // Backlink to the panel location our applet is in, set by Cinnamon.
+        this._panelLocation = null;     // Backlink to the panel location our applet is in, set by Laminax.
         this.locationLabel = 'right';
         this._newPanelId = null;  //  Used when moving an applet
         this._newPanelLocation = null;  //  Used when moving an applet
@@ -173,7 +173,7 @@ var Applet = class Applet {
         this._iconSize = null;
 
         this.instance_id = instance_id; // Needed by appletSettings
-        this._uuid = null;      // Defined in gsettings, set by Cinnamon.
+        this._uuid = null;      // Defined in gsettings, set by Laminax.
         this._meta = null;      // set by appletManager
         this._dragging = false;
         this._draggable = DND.makeDraggable(this.actor);
@@ -191,7 +191,7 @@ var Applet = class Applet {
             this._setAppletReactivity();
         }));
 
-        // FIXME: Cinnamon should be providing a sandbox environment for extensions, and not depend on data passed
+        // FIXME: Laminax should be providing a sandbox environment for extensions, and not depend on data passed
         // from the extension for basic state that we are already keeping track of in appletManager. Since applets
         // need icon sizes available immediately in their constructor, this has to stay for now.
         if (instance_id) {
@@ -563,7 +563,7 @@ var Applet = class Applet {
     }
 
     confirmRemoveApplet (event) {
-        if (Clutter.ModifierType.CONTROL_MASK & Cinnamon.get_event_state(event)) {
+        if (Clutter.ModifierType.CONTROL_MASK & Laminax.get_event_state(event)) {
             AppletManager._removeAppletFromPanel(this._uuid, this.instance_id);
         } else {
             let dialog = new ModalDialog.ConfirmDialog(
@@ -628,7 +628,7 @@ var Applet = class Applet {
         // if it looks translated, return the translation of the domain
         if (translated !== str)
             return translated;
-        // else, use the default cinnamon domain
+        // else, use the default Laminax domain
         return _(str);
     }
 
@@ -1166,21 +1166,21 @@ var PopupResizeHandler = class PopupResizeHandler {
 
         this._no_edges_draggable = false;
         if (this._top_edge_draggable && this._left_edge_draggable) {
-            cursor = Cinnamon.Cursor.RESIZE_TOP_LEFT;
+            cursor = Laminax.Cursor.RESIZE_TOP_LEFT;
         } else if (this._top_edge_draggable && this._right_edge_draggable) {
-            cursor = Cinnamon.Cursor.RESIZE_TOP_RIGHT;
+            cursor = Laminax.Cursor.RESIZE_TOP_RIGHT;
         } else if (this._bottom_edge_draggable && this._left_edge_draggable) {
-            cursor = Cinnamon.Cursor.RESIZE_BOTTOM_LEFT;
+            cursor = Laminax.Cursor.RESIZE_BOTTOM_LEFT;
         } else if (this._bottom_edge_draggable && this._right_edge_draggable) {
-            cursor = Cinnamon.Cursor.RESIZE_BOTTOM_RIGHT;
+            cursor = Laminax.Cursor.RESIZE_BOTTOM_RIGHT;
         } else if (this._top_edge_draggable) {
-            cursor = Cinnamon.Cursor.RESIZE_TOP;
+            cursor = Laminax.Cursor.RESIZE_TOP;
         } else if (this._bottom_edge_draggable) {
-            cursor = Cinnamon.Cursor.RESIZE_BOTTOM;
+            cursor = Laminax.Cursor.RESIZE_BOTTOM;
         } else if (this._left_edge_draggable) {
-            cursor = Cinnamon.Cursor.RESIZE_LEFT;
+            cursor = Laminax.Cursor.RESIZE_LEFT;
         } else if (this._right_edge_draggable) {
-            cursor = Cinnamon.Cursor.RESIZE_RIGHT;
+            cursor = Laminax.Cursor.RESIZE_RIGHT;
         } else {
             global.unset_cursor();
             this._no_edges_draggable = true;

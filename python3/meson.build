@@ -13,11 +13,11 @@ message('Installing python modules to: @0@'.format(install_path))
 # recognize install_dir.
 install_data(
   [
-    'cinnamon/__init__.py',
-    'cinnamon/harvester.py',
-    'cinnamon/logger.py',
-    'cinnamon/proxygsettings.py',
-    'cinnamon/updates.py'
+    'Laminax/__init__.py',
+    'Laminax/harvester.py',
+    'Laminax/logger.py',
+    'Laminax/proxygsettings.py',
+    'Laminax/updates.py'
   ],
-  install_dir: join_paths(install_path, 'cinnamon'),
+  install_dir: join_paths(install_path, 'Laminax'),
 )

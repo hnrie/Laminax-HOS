@@ -1,6 +1,6 @@
 // -*- mode: js; js-indent-level: 4; indent-tabs-mode: nil -*-
 
-const Cinnamon = imports.gi.Cinnamon;
+const Laminax = imports.gi.Laminax;
 const Clutter = imports.gi.Clutter;
 const Cogl = imports.gi.Cogl;
 const Gio = imports.gi.Gio;
@@ -22,10 +22,10 @@ var commandHeader = 'const Clutter = imports.gi.Clutter; ' +
                     'const Gtk = imports.gi.Gtk; ' +
                     'const Mainloop = imports.mainloop; ' +
                     'const Meta = imports.gi.Meta; ' +
-                    'const Cinnamon = imports.gi.Cinnamon; ' +
+                    'const Laminax = imports.gi.Laminax; ' +
                     'const Main = imports.ui.main; ' +
                     /* Utility functions...we should probably be able to use these
-                     * in Cinnamon core code too. */
+                     * in Laminax core code too. */
                     'const stage = global.stage; ' +
                     'const color = function(pixel) { let c= new Clutter.Color(); c.from_pixel(pixel); return c; }; ' +
                     /* Special lookingGlass functions */
@@ -151,7 +151,7 @@ class WindowList {
         this.latestWindowList = [];
         this.delayedUpdateId = 0;
 
-        let tracker = Cinnamon.WindowTracker.get_default();
+        let tracker = Laminax.WindowTracker.get_default();
         global.display.connect('window-created', () => { this._queueDelayedUpdate() });
         tracker.connect('window-app-changed', () => { this._queueDelayedUpdate() });
     }
@@ -179,7 +179,7 @@ class WindowList {
 
     _updateWindowList() {
         let windows = global.get_window_actors();
-        let tracker = Cinnamon.WindowTracker.get_default();
+        let tracker = Laminax.WindowTracker.get_default();
 
         let oldWindowList = this.latestWindowList;
         this.latestWindowList = [];
@@ -267,7 +267,7 @@ function addBorderPaintHook(actor) {
 
 class Inspector {
     constructor() {
-        let container = new Cinnamon.GenericContainer({ width: 0,
+        let container = new Laminax.GenericContainer({ width: 0,
                                                         height: 0 });
         container.connect('allocate', (...args) => { this._allocate(...args) });
         Main.uiGroup.add_actor(container);
@@ -444,7 +444,7 @@ Signals.addSignalMethods(Inspector.prototype);
 
 const melangeIFace =
     '<node> \
-        <interface name="org.Cinnamon.Melange"> \
+        <interface name="org.Laminax.Melange"> \
             <method name="show" /> \
             <method name="hide" /> \
             <method name="getVisible"> \
@@ -455,7 +455,7 @@ const melangeIFace =
 
 const lgIFace =
     '<node> \
-        <interface name="org.Cinnamon.LookingGlass"> \
+        <interface name="org.Laminax.LookingGlass"> \
             <method name="Eval"> \
                 <arg type="s" direction="in" name="code"/> \
             </method> \
@@ -509,7 +509,7 @@ var Melange = class {
         this.proxy = null;
         this._it = null;
         this._open = false;
-        this._settings = new Gio.Settings({schema_id: "org.cinnamon.desktop.keybindings"});
+        this._settings = new Gio.Settings({schema_id: "org.Laminax.desktop.keybindings"});
         this._settings.connect("changed::looking-glass-keybinding", () => { this._update_keybinding() });
         this._update_keybinding();
 
@@ -520,9 +520,9 @@ var Melange = class {
         this._history = new History.HistoryManager({ gsettingsKey: HISTORY_KEY });
 
         this._dbusImpl = Gio.DBusExportedObject.wrapJSObject(lgIFace, this);
-        this._dbusImpl.export(Gio.DBus.session, '/org/Cinnamon/LookingGlass');
+        this._dbusImpl.export(Gio.DBus.session, '/org/Laminax/LookingGlass');
 
-        Gio.DBus.session.own_name('org.Cinnamon.LookingGlass', Gio.BusNameOwnerFlags.REPLACE, null, null);
+        Gio.DBus.session.own_name('org.Laminax.LookingGlass', Gio.BusNameOwnerFlags.REPLACE, null, null);
         this.ensureProxy();
     }
 
@@ -537,10 +537,10 @@ var Melange = class {
         Gio.DBusProxy.new(
               Gio.DBus.session,
               Gio.DBusProxyFlags.DO_NOT_AUTO_START_AT_CONSTRUCTION,
-              nodeInfo.lookup_interface("org.Cinnamon.Melange"),
-              "org.Cinnamon.Melange",
-              "/org/Cinnamon/Melange",
-              "org.Cinnamon.Melange",
+              nodeInfo.lookup_interface("org.Laminax.Melange"),
+              "org.Laminax.Melange",
+              "/org/Laminax/Melange",
+              "org.Laminax.Melange",
               null,
               this._onProxyReady.bind(this)
         );
@@ -550,7 +550,7 @@ var Melange = class {
         try {
             this.proxy = Gio.DBusProxy.new_finish(res);
         } catch (e) {
-            log('error creating org.Cinnamon.Melange proxy: %s'.format(e.message));
+            log('error creating org.Laminax.Melange proxy: %s'.format(e.message));
             return;
         }
     }
@@ -601,7 +601,7 @@ var Melange = class {
     getWindowApp(idx) {
         let metaWindow = this._windowList.getWindowById(idx)
         if (metaWindow) {
-            let tracker = Cinnamon.WindowTracker.get_default();
+            let tracker = Laminax.WindowTracker.get_default();
             return tracker.get_window_app(metaWindow);
         }
         return null;

@@ -3,7 +3,7 @@
 /**
 * DOCINFO
 *
-* DocInfo is a JS layer on top of Cinnamon's DocSystem (which is written in C).
+* DocInfo is a JS layer on top of Laminax's DocSystem (which is written in C).
 *
 * The advantages of using DocInfo (rather than Gtk.RecentManager) are:
 *
@@ -15,7 +15,7 @@
 */
 
 const St = imports.gi.St;
-const Cinnamon = imports.gi.Cinnamon;
+const Laminax = imports.gi.Laminax;
 const Lang = imports.lang;
 const Signals = imports.signals;
 const Gio = imports.gi.Gio;
@@ -61,7 +61,7 @@ function DocManager() {
 
 DocManager.prototype = {
     _init: function() {
-        this._docSystem = Cinnamon.DocSystem.get_default();
+        this._docSystem = Laminax.DocSystem.get_default();
         this._infosByTimestamp = [];
         this._load();
         this._docSystem.connect('changed', Lang.bind(this, this._reload));

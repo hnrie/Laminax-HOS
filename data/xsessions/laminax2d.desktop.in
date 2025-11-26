@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Laminax (Software Rendering)
+Comment=This session logs you into Laminax (using software rendering)
+Exec=Laminax-session-Laminax2d
+TryExec=@bindir@/Laminax2d
+Icon=
+Type=Application
+X-Ubuntu-Gettext-Domain=Laminax
+X-GNOME-Provides=Laminax2d
+

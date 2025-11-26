@@ -9,13 +9,13 @@ const AppletManager = imports.ui.appletManager;
 const DeskletManager = imports.ui.deskletManager;
 
 const MK = imports.gi.CDesktopEnums.MediaKeyType;
-const CinnamonDesktop = imports.gi.CinnamonDesktop;
+const LaminaxDesktop = imports.gi.LaminaxDesktop;
 
-const CUSTOM_KEYS_PARENT_SCHEMA = "org.cinnamon.desktop.keybindings";
-const CUSTOM_KEYS_BASENAME = "/org/cinnamon/desktop/keybindings/custom-keybindings";
-const CUSTOM_KEYS_SCHEMA = "org.cinnamon.desktop.keybindings.custom-keybinding";
+const CUSTOM_KEYS_PARENT_SCHEMA = "org.Laminax.desktop.keybindings";
+const CUSTOM_KEYS_BASENAME = "/org/Laminax/desktop/keybindings/custom-keybindings";
+const CUSTOM_KEYS_SCHEMA = "org.Laminax.desktop.keybindings.custom-keybinding";
 
-const MEDIA_KEYS_SCHEMA = "org.cinnamon.desktop.keybindings.media-keys";
+const MEDIA_KEYS_SCHEMA = "org.Laminax.desktop.keybindings.media-keys";
 
 const OBSOLETE_MEDIA_KEYS = [
     MK.VIDEO_OUT,
@@ -28,7 +28,7 @@ function is_obsolete_mk(key_enum) {
 
 const iface = "\
     <node> \
-      <interface name='org.cinnamon.SettingsDaemon.KeybindingHandler'> \
+      <interface name='org.Laminax.SettingsDaemon.KeybindingHandler'> \
         <annotation name='org.freedesktop.DBus.GLib.CSymbol' value='csd_media_keys_manager'/> \
         <method name='HandleKeybinding'> \
           <arg name='type' direction='in' type='u'/> \
@@ -45,8 +45,8 @@ function KeybindingManager() {
 KeybindingManager.prototype = {
     _init: function() {
         this._proxy = new proxy(Gio.DBus.session,
-                                'org.cinnamon.SettingsDaemon.KeybindingHandler',
-                                '/org/cinnamon/SettingsDaemon/KeybindingHandler');
+                                'org.Laminax.SettingsDaemon.KeybindingHandler',
+                                '/org/Laminax/SettingsDaemon/KeybindingHandler');
 
         /* Keep track of bindings so we can a) check if they've change (and avoid the work
          * if the haven't), b) handle the callbacks when the keystrokes are captured by
@@ -86,7 +86,7 @@ KeybindingManager.prototype = {
 
     /*  Menu applet example
      *
-     *  uuid: menu@cinnamon.org
+     *  uuid: menu@Laminax.org
      *  binding name: overlay-key
      *    instances:
      *      49: super-l, super-r
@@ -95,14 +95,14 @@ KeybindingManager.prototype = {
      *  is in applet_bindings as:
      *
      *  {
-     *      "menu@cinnamon.org::overlay-key:super-l" : {
+     *      "menu@Laminax.org::overlay-key:super-l" : {
      *          "49": callback49,
      *          "52": callback52
      *      },
-     *      "menu@cinnamon.org::overlay-key:super-r" : {
+     *      "menu@Laminax.org::overlay-key:super-r" : {
      *          "49": callback49
      *      },
-     *      "menu@cinnamon.org::overlay-key:ctrl-shift-f7" : {
+     *      "menu@Laminax.org::overlay-key:ctrl-shift-f7" : {
      *          "52": callback52
      *      }
      *  }
@@ -340,7 +340,7 @@ KeybindingManager.prototype = {
                 continue;
             }
 
-            let bindings = this.media_key_settings.get_strv(CinnamonDesktop.desktop_get_media_key_string(i));
+            let bindings = this.media_key_settings.get_strv(LaminaxDesktop.desktop_get_media_key_string(i));
             this.addHotKeyArray("media-keys-" + i.toString(),
                            bindings,
                            Lang.bind(this, this.on_global_media_key_pressed, i));
@@ -351,7 +351,7 @@ KeybindingManager.prototype = {
                 continue;
             }
 
-            let bindings = this.media_key_settings.get_strv(CinnamonDesktop.desktop_get_media_key_string(i));
+            let bindings = this.media_key_settings.get_strv(LaminaxDesktop.desktop_get_media_key_string(i));
             this.addHotKeyArray("media-keys-" + i.toString(),
                            bindings,
                            Lang.bind(this, this.on_media_key_pressed, i));

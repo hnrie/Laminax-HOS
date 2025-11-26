@@ -56,7 +56,7 @@ class OskLayoutTester():
         self.window.add(self.main_box)
         self.window.show_all()
 
-        self.input_source_settings = Gio.Settings.new("org.cinnamon.desktop.input-sources")
+        self.input_source_settings = Gio.Settings.new("org.Laminax.desktop.input-sources")
         print("Saving original sources")
         self.orig_sources = self.input_source_settings.get_value("sources")
 
@@ -64,7 +64,7 @@ class OskLayoutTester():
         self.load_layouts()
 
     def toggle_keyboard(self, button, data=None):
-        subprocess.run(["cinnamon-dbus-command", "ToggleKeyboard"])
+        subprocess.run(["Laminax-dbus-command", "ToggleKeyboard"])
 
     def load_layouts(self):
         for file in Path.cwd().iterdir():

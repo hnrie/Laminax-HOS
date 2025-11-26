@@ -1,0 +1,3 @@
+[D-BUS Service]
+Name=org.Laminax.Melange
+Exec=@bindir@/Laminax-looking-glass daemon

@@ -1,0 +1,8 @@
+{
+ "uuid": "window-list@Laminax.org",
+ "name": "Window list",
+ "description": "Main Laminax window list",
+ "icon": "cs-windows",
+ "role": "windowattentionhandler",
+ "max-instances": -1
+}

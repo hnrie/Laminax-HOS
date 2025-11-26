@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Laminax Menu Editor
+Comment=Edit the entries of the Laminax menu applet
+Exec=Laminax-menu-editor
+Icon=alacarte
+OnlyShowIn=X-Laminax;
+Terminal=false
+Type=Application
+NoDisplay=true
+Categories=GNOME;GTK;Settings;DesktopSettings;
+StartupNotify=false

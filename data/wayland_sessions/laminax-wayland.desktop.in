@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Laminax on Wayland (Experimental)
+Comment=This session logs you into Laminax
+Exec=Laminax-session-Laminax --wayland
+TryExec=@bindir@/Laminax
+Icon=
+Type=Application
+

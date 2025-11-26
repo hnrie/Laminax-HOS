@@ -1,4 +1,4 @@
-project('Cinnamon', 'c', version : '6.4.6', meson_version : '>=0.56.0')
+project('Laminax', 'c', version : '6.4.6', meson_version : '>=0.56.0')
 
 gnome = import('gnome')
 i18n = import('i18n')
@@ -26,7 +26,7 @@ servicedir = dbus.get_variable(pkgconfig: 'session_bus_services_dir', pkgconfig_
 # dependencies
 cjs = dependency('cjs-1.0', version: '>= 4.8.0')
 clutter = dependency('muffin-clutter-0')
-cmenu = dependency('libcinnamon-menu-3.0', version: '>= 4.8.0')
+cmenu = dependency('libLaminax-menu-3.0', version: '>= 4.8.0')
 cogl = dependency('muffin-cogl-0')
 cogl_path = dependency('muffin-cogl-path-0')
 gcr = dependency('gcr-base-3', version: '>= 3.7.5')
@@ -82,14 +82,14 @@ math = cc.find_library('m', required: false)
 python = find_program('python3')
 
 # generate config.h
-cinnamon_conf = configuration_data()
-cinnamon_conf.set_quoted('VERSION', version)
-cinnamon_conf.set_quoted('GETTEXT_PACKAGE', meson.project_name().to_lower())
-cinnamon_conf.set('BUILT_NM_AGENT', internal_nm_agent)
+Laminax_conf = configuration_data()
+Laminax_conf.set_quoted('VERSION', version)
+Laminax_conf.set_quoted('GETTEXT_PACKAGE', meson.project_name().to_lower())
+Laminax_conf.set('BUILT_NM_AGENT', internal_nm_agent)
 
 have_mallinfo = cc.has_function('mallinfo', prefix: '#include <malloc.h>')
 if have_mallinfo
-    cinnamon_conf.set10('HAVE_MALLINFO', true)
+    Laminax_conf.set10('HAVE_MALLINFO', true)
 endif
 
 langinfo_test = '''
@@ -103,12 +103,12 @@ have_nl_time_first_weekday = cc.compiles(
     name : 'langinfo _NL_TIME_FIRST_WEEKDAY check')
 
 if have_nl_time_first_weekday
-    cinnamon_conf.set10('HAVE__NL_TIME_FIRST_WEEKDAY', true)
+    Laminax_conf.set10('HAVE__NL_TIME_FIRST_WEEKDAY', true)
 endif
 
 config_h_file = configure_file(
     output : 'config.h',
-    configuration : cinnamon_conf
+    configuration : Laminax_conf
 )
 
 config_h = declare_dependency(
@@ -129,7 +129,7 @@ c_args = [
     '-DDATADIR="@0@"'.format(join_paths(prefix, datadir)),
     '-DLIBDIR="@0@"'.format(join_paths(prefix, libdir)),
     '-DBINDIR="@0@"'.format(join_paths(prefix, bindir)),
-    '-DCINNAMON_DATADIR="@0@"'.format(join_paths(prefix, pkgdatadir)),
+    '-DLaminax_DATADIR="@0@"'.format(join_paths(prefix, pkgdatadir)),
     '-DJSDIR="@0@/js"'.format(join_paths(prefix, pkgdatadir)),
     '-DMUFFIN_TYPELIB_DIR="@0@"'.format(muffin_typelibdir),
     '-DPOLKIT_VERSION=@0@'.format(pkv),
@@ -166,14 +166,14 @@ configure_file(
     input: 'js/misc/config.js.in',
     output: 'config.js',
     configuration: config_js_conf,
-    install_dir: 'share/cinnamon/js/misc/'
+    install_dir: 'share/Laminax/js/misc/'
 )
 
 
 excluded_files = []
 if get_option('exclude_info_settings')
-    excluded_files += ['usr/share/applications/cinnamon-settings-info.desktop']
-    excluded_files += ['usr/share/cinnamon/cinnamon-settings/modules/cs_info.py']
+    excluded_files += ['usr/share/applications/Laminax-settings-info.desktop']
+    excluded_files += ['usr/share/Laminax/Laminax-settings/modules/cs_info.py']
 endif
 
 install_subdir(
@@ -183,9 +183,9 @@ install_subdir(
     exclude_files : excluded_files
 )
 
-session_files = ['cinnamon.session', 'cinnamon2d.session']
+session_files = ['Laminax.session', 'Laminax2d.session']
 if get_option('wayland')
-    session_files += ['cinnamon-wayland.session']
+    session_files += ['Laminax-wayland.session']
 endif
 
 foreach session_file : session_files
@@ -193,7 +193,7 @@ foreach session_file : session_files
         input: session_file + '.in',
         output: session_file,
         configuration: session_conf,
-        install_dir: join_paths(prefix, datadir, 'cinnamon-session', 'sessions'),
+        install_dir: join_paths(prefix, datadir, 'Laminax-session', 'sessions'),
     )
 endforeach
 

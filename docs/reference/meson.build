@@ -8,8 +8,8 @@ if get_option('docs')
         configuration: version_conf,
     )
 
-    subdir('cinnamon')
-    subdir('cinnamon-js')
-    subdir('cinnamon-tutorials')
+    subdir('Laminax')
+    subdir('Laminax-js')
+    subdir('Laminax-tutorials')
     subdir('st')
 endif

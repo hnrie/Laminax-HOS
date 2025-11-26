@@ -1,0 +1,7 @@
+{
+ "uuid": "calendar@Laminax.org",
+ "name": "Calendar",
+ "description": "The Laminax calendar applet",
+ "icon": "gnome-calendar",
+ "max-instances": -1
+}

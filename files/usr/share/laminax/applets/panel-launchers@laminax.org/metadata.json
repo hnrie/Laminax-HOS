@@ -1,0 +1,8 @@
+{
+ "uuid": "panel-launchers@Laminax.org",
+ "name": "Panel launchers",
+ "description": "Launch applications from the panel",
+ "icon": "Laminax-panel-launcher",
+ "role": "panellauncher",
+ "max-instances": -1
+}

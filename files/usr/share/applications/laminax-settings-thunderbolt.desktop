@@ -1,0 +1,9 @@
+[Desktop Entry]
+Icon=cs-thunderbolt
+Exec=Laminax-settings thunderbolt
+Type=Application
+OnlyShowIn=X-Laminax;
+Categories=Settings;
+Name=Thunderbolt
+Comment=Manage Thunderbolt and USB4 devices
+Keywords=thunderbolt;usb;docking;station;hub;dock;

@@ -5,7 +5,7 @@ const GLib = imports.gi.GLib;
 const Gtk = imports.gi.Gtk;
 const St = imports.gi.St;
 const Lang = imports.lang;
-const Cinnamon = imports.gi.Cinnamon;
+const Laminax = imports.gi.Laminax;
 const Signals = imports.signals;
 const Tweener = imports.ui.tweener;
 const Main = imports.ui.main;
@@ -29,10 +29,10 @@ var DragMotionResult = {
 };
 
 var DRAG_CURSOR_MAP = {
-    0: Cinnamon.Cursor.DND_UNSUPPORTED_TARGET,
-    1: Cinnamon.Cursor.DND_COPY,
-    2: Cinnamon.Cursor.DND_MOVE,
-    3: Cinnamon.Cursor.POINTING_HAND
+    0: Laminax.Cursor.DND_UNSUPPORTED_TARGET,
+    1: Laminax.Cursor.DND_COPY,
+    2: Laminax.Cursor.DND_MOVE,
+    3: Laminax.Cursor.POINTING_HAND
 };
 
 var DragDropResult = {
@@ -269,7 +269,7 @@ var _Draggable = new Lang.Class({
         if (this._onEventId)
             this._ungrabActor(event);
         this._grabEvents(event);
-        global.set_cursor(Cinnamon.Cursor.DND_IN_DRAG);
+        global.set_cursor(Laminax.Cursor.DND_IN_DRAG);
 
         this._dragX = this._dragStartX = stageX;
         this._dragY = this._dragStartY = stageY;
@@ -278,7 +278,7 @@ var _Draggable = new Lang.Class({
             this._dragActor = this.actor._delegate.getDragActor();
             global.reparentActor(this._dragActor, Main.uiGroup);
             this._dragActor.raise_top();
-            Cinnamon.util_set_hidden_from_pick(this._dragActor, true);
+            Laminax.util_set_hidden_from_pick(this._dragActor, true);
 
             // Drag actor does not always have to be the same as actor. For example drag actor
             // can be an image that's part of the actor. So to perform "snap back" correctly we need
@@ -327,7 +327,7 @@ var _Draggable = new Lang.Class({
 
             global.reparentActor(this._dragActor, Main.uiGroup);
             this._dragActor.raise_top();
-            Cinnamon.util_set_hidden_from_pick(this._dragActor, true);
+            Laminax.util_set_hidden_from_pick(this._dragActor, true);
         }
 
         this._dragOrigOpacity = this._dragActor.opacity;
@@ -393,7 +393,7 @@ var _Draggable = new Lang.Class({
         let y = this._overrideY == undefined ? this._dragY : this._overrideY;
 
         if (this.recentDropTarget) {
-            let allocation = Cinnamon.util_get_transformed_allocation(this.recentDropTarget);
+            let allocation = Laminax.util_get_transformed_allocation(this.recentDropTarget);
 
             if (x < allocation.x1 || x > allocation.x2 || y < allocation.y1 || y > allocation.y2) {
                 this.recentDropTarget._delegate.handleDragOut();
@@ -447,7 +447,7 @@ var _Draggable = new Lang.Class({
             target = target.get_parent();
         }
         if (result in DRAG_CURSOR_MAP) global.set_cursor(DRAG_CURSOR_MAP[result]);
-        else global.set_cursor(Cinnamon.Cursor.DND_IN_DRAG);
+        else global.set_cursor(Laminax.Cursor.DND_IN_DRAG);
         return false;
     },
 
@@ -658,7 +658,7 @@ var _Draggable = new Lang.Class({
 
     _dragComplete: function() {
         if (this._dragOrigParent)
-            Cinnamon.util_set_hidden_from_pick(this._dragActor, false);
+            Laminax.util_set_hidden_from_pick(this._dragActor, false);
 
         this._ungrabEvents();
         global.sync_pointer();
@@ -706,7 +706,7 @@ function GenericDragItemContainer() {
 
 GenericDragItemContainer.prototype = {
     _init: function() {
-        this.actor = new Cinnamon.GenericContainer({ style_class: 'drag-item-container' });
+        this.actor = new Laminax.GenericContainer({ style_class: 'drag-item-container' });
         this.actor.connect('get-preferred-width',
                            Lang.bind(this, this._getPreferredWidth));
         this.actor.connect('get-preferred-height',

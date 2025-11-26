@@ -36,7 +36,7 @@ var deskletChangeKey = 0;
 const ENABLED_DESKLETS_KEY = 'enabled-desklets';
 const DESKLET_SNAP_KEY = 'desklet-snap';
 const DESKLET_SNAP_INTERVAL_KEY = 'desklet-snap-interval';
-const KEYBINDING_SCHEMA = 'org.cinnamon.desktop.keybindings';
+const KEYBINDING_SCHEMA = 'org.Laminax.desktop.keybindings';
 const SHOW_DESKLETS_KEY = 'show-desklets';
 const LOCK_DESKLETS_KEY = "lock-desklets";
 
@@ -45,7 +45,7 @@ function initEnabledDesklets() {
         promises.push(Extension.loadExtension(definitions[i].uuid, Extension.Type.DESKLET))
     }
     return Promise.all(promises).then(function() {
-        Main.cinnamonDBusService.EmitXletsLoadedComplete();
+        Main.LaminaxDBusService.EmitXletsLoadedComplete();
         promises = [];
     });
 }
@@ -277,8 +277,8 @@ function _unloadDesklet(deskletDefinition, deleteConfig) {
 
 function _removeDeskletConfigFile(uuid, instanceId) {
     let config_paths = [
-        [GLib.get_home_dir(), ".cinnamon", "configs", uuid, instanceId + ".json"].join("/"),
-        [GLib.get_user_config_dir(), "cinnamon", "spices", uuid, instanceId + ".json"].join("/")
+        [GLib.get_home_dir(), ".Laminax", "configs", uuid, instanceId + ".json"].join("/"),
+        [GLib.get_user_config_dir(), "Laminax", "spices", uuid, instanceId + ".json"].join("/")
     ];
 
     for (let i = 0; i < config_paths.length; i++) {

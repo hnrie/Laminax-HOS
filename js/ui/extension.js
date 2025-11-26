@@ -26,9 +26,9 @@ var State = {
     X11_ONLY: 4
 };
 
-// Xlets using imports.gi.NMClient. This should be removed in Cinnamon 4.2+,
+// Xlets using imports.gi.NMClient. This should be removed in Laminax 4.2+,
 // after these applets have been updated on Spices.
-var knownCinnamon4Conflicts = [
+var knownLaminax4Conflicts = [
     // Applets
     'turbonote@iksws.com.b',
     'vnstat@linuxmint.com',
@@ -38,7 +38,7 @@ var knownCinnamon4Conflicts = [
 ];
 
 var x11Only = [
-        "systray@cinnamon.org"
+        "systray@Laminax.org"
     ]
 
 // macro for creating extension types
@@ -78,12 +78,12 @@ function _createExtensionType(name, folder, manager, overrides){
 
 /**
  * const Type:
- * @EXTENSION: Cinnamon extensions
- * @APPLET: Cinnamon panel applets
+ * @EXTENSION: Laminax extensions
+ * @APPLET: Laminax panel applets
  *
  * @name: Upper case first character name for printing messages
  *        Also converted to lowercase to find the correct javascript file
- * @folder: The folder name within the system and user cinnamon folders
+ * @folder: The folder name within the system and user Laminax folders
  * @requiredFunctions: Functions that must exist in the main javascript file
  * @requiredProperties: Properties that must be set in the metadata.json file
  * @niceToHaveProperties: Properties that are encouraged to be set in the metadata.json file
@@ -99,7 +99,7 @@ var extensions = [];
 var Type = {
     EXTENSION: _createExtensionType("Extension", "extensions", ExtensionSystem, {
         requiredFunctions: ["init", "disable", "enable"],
-        requiredProperties: ["uuid", "name", "description", "cinnamon-version"],
+        requiredProperties: ["uuid", "name", "description", "Laminax-version"],
         niceToHaveProperties: ["url"],
     }),
     APPLET: _createExtensionType("Applet", "applets", AppletManager, {
@@ -211,7 +211,7 @@ Extension.prototype = {
         this.iconDirectory = null;
         this.meta = createMetaDummy(uuid, dir.get_path(), State.INITIALIZING);
 
-        let isPotentialNMClientConflict = knownCinnamon4Conflicts.indexOf(uuid) > -1;
+        let isPotentialNMClientConflict = knownLaminax4Conflicts.indexOf(uuid) > -1;
 
         const finishLoad = () => {
             // Many xlets still use appletMeta/deskletMeta to get the path
@@ -260,7 +260,7 @@ Extension.prototype = {
                 this.meta.path = this.dir.get_path();
 
                 // If an xlet has known usage of imports.gi.NMClient, we require them to have a
-                // 4.0 directory. It is the only way to assume they are patched for Cinnamon 4 from here.
+                // 4.0 directory. It is the only way to assume they are patched for Laminax 4 from here.
                 if (isPotentialNMClientConflict && this.meta.path.indexOf(`/4.0`) === -1) {
                     throw new Error(`Found unpatched usage of imports.gi.NMClient for ${this.lowerType} ${uuid}`);
                 }
@@ -286,15 +286,15 @@ Extension.prototype = {
                 throw new Error(`${type.name} ${uuid}: Could not create ${this.lowerType} object.`);
             }
             this.finalize();
-            Main.cinnamonDBusService.EmitXletAddedComplete(true, uuid);
+            Main.LaminaxDBusService.EmitXletAddedComplete(true, uuid);
         }).catch((e) => {
              // Silently fail to load xlets that aren't actually installed -
              //   but no error, since the user can't do anything about it anyhow
              //   (short of editing gsettings).  Silent failure is consistent with
-             //   other reactions in Cinnamon to missing items (e.g. panel launchers
+             //   other reactions in Laminax to missing items (e.g. panel launchers
              //   just don't show up if their program isn't installed, but we don't
              //   remove them or anything)
-            Main.cinnamonDBusService.EmitXletAddedComplete(false, uuid);
+            Main.LaminaxDBusService.EmitXletAddedComplete(false, uuid);
 
             if (e.cause == null || e.cause !== State.X11_ONLY) {
                 Main.xlet_startup_error = true;
@@ -331,9 +331,9 @@ Extension.prototype = {
             throw logError(`uuid "${this.meta.uuid}" from metadata.json does not match directory name.`, this.uuid);
         }
 
-        // If cinnamon versions are set check them
-        if ('cinnamon-version' in this.meta && !versionCheck(this.meta['cinnamon-version'], Config.PACKAGE_VERSION)) {
-            throw logError('Extension is not compatible with current Cinnamon version', this.uuid, null, State.OUT_OF_DATE);
+        // If Laminax versions are set check them
+        if ('Laminax-version' in this.meta && !versionCheck(this.meta['Laminax-version'], Config.PACKAGE_VERSION)) {
+            throw logError('Extension is not compatible with current Laminax version', this.uuid, null, State.OUT_OF_DATE);
         }
 
         // If a role is set, make sure it's a valid one
@@ -617,7 +617,7 @@ function reloadExtension(uuid, type) {
 
 function findExtensionDirectory(uuid, userDir, folder) {
     let dir, dirPath;
-    if (!GLib.getenv('CINNAMON_TROUBLESHOOT')) {
+    if (!GLib.getenv('Laminax_TROUBLESHOOT')) {
         dirPath = `${userDir}/${uuid}`;
         dir = Gio.file_new_for_path(dirPath);
         if (dir.query_file_type(Gio.FileQueryInfoFlags.NONE, null) === Gio.FileType.DIRECTORY) {
@@ -627,7 +627,7 @@ function findExtensionDirectory(uuid, userDir, folder) {
 
     let systemDataDirs = GLib.get_system_data_dirs();
     for (let i = 0; i < systemDataDirs.length; i++) {
-        dirPath = `${systemDataDirs[i]}/cinnamon/${folder}/${uuid}`;
+        dirPath = `${systemDataDirs[i]}/Laminax/${folder}/${uuid}`;
         dir = Gio.file_new_for_path(dirPath);
         if (dir.query_file_type(Gio.FileQueryInfoFlags.NONE, null) === Gio.FileType.DIRECTORY) {
             return dir;

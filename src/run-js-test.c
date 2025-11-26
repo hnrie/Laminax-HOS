@@ -36,8 +36,8 @@
 #include <cjs/gjs.h>
 #include <gtk/gtk.h>
 
-#include "cinnamon-global.h"
-#include "cinnamon-global-private.h"
+#include "Laminax-global.h"
+#include "Laminax-global-private.h"
 
 static char *command = NULL;
 
@@ -65,7 +65,7 @@ main(int argc, char **argv)
   GOptionContext *context;
   ClutterActor *stage;
   GError *error = NULL;
-  CinnamonGlobal *global;
+  LaminaxGlobal *global;
   GjsContext *js_context;
   char *script;
   const char *filename;
@@ -95,9 +95,9 @@ main(int argc, char **argv)
 
   setlocale (LC_ALL, "");
 
-  _cinnamon_global_init (NULL);
-  global = cinnamon_global_get ();
-  js_context = _cinnamon_global_get_gjs_context (global);
+  _Laminax_global_init (NULL);
+  global = Laminax_global_get ();
+  js_context = _Laminax_global_get_gjs_context (global);
 
   /* prepare command line arguments */
   if (!gjs_context_define_string_array (js_context, "ARGV",

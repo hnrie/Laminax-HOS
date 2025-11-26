@@ -7,7 +7,7 @@ const Clutter = imports.gi.Clutter;
 const St = imports.gi.St;
 const Main = imports.ui.main;
 
-const SETTINGS_SCHEMA = 'org.cinnamon';
+const SETTINGS_SCHEMA = 'org.Laminax';
 const SETTINGS_KEY = 'startup-icon-name';
 
 function Animation(primaryMonitorInfo, onComplete) {

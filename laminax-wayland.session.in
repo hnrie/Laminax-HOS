@@ -1,0 +1,6 @@
+[Laminax Session]
+Name=Laminax
+RequiredComponents=Laminax-wayland;nemo-autostart;@REQUIRED@
+DesktopName=X-Laminax
+
+

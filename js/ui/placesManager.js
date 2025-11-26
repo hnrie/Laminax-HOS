@@ -2,7 +2,7 @@
 
 const GLib = imports.gi.GLib;
 const Gio = imports.gi.Gio;
-const Cinnamon = imports.gi.Cinnamon;
+const Laminax = imports.gi.Laminax;
 const Lang = imports.lang;
 const Mainloop = imports.mainloop;
 const Signals = imports.signals;
@@ -306,8 +306,8 @@ PlacesManager.prototype = {
 
         let homeFile = Gio.file_new_for_path (GLib.get_home_dir());
         let homeUri = homeFile.get_uri();
-        let homeLabel = Cinnamon.util_get_label_for_uri (homeUri);
-        let homeIcon = Cinnamon.util_get_icon_for_uri (homeUri);
+        let homeLabel = Laminax.util_get_label_for_uri (homeUri);
+        let homeIcon = Laminax.util_get_icon_for_uri (homeUri);
         this._home = new PlaceInfo('special:home', homeLabel,
             function(size) {
                 return new St.Icon({ gicon: homeIcon, icon_size: size });
@@ -319,8 +319,8 @@ PlacesManager.prototype = {
         let desktopPath = GLib.get_user_special_dir(GLib.UserDirectory.DIRECTORY_DESKTOP);
         let desktopFile = Gio.file_new_for_path (desktopPath);
         let desktopUri = desktopFile.get_uri();
-        let desktopLabel = Cinnamon.util_get_label_for_uri (desktopUri);
-        let desktopIcon = Cinnamon.util_get_icon_for_uri (desktopUri);
+        let desktopLabel = Laminax.util_get_label_for_uri (desktopUri);
+        let desktopIcon = Laminax.util_get_icon_for_uri (desktopUri);
         this._desktopMenu = new PlaceInfo('special:desktop', desktopLabel,
             function(size) {
                 return new St.Icon({ gicon: desktopIcon, icon_size: size });
@@ -489,7 +489,7 @@ PlacesManager.prototype = {
             return;
         }
 
-        let bookmarksContent = Cinnamon.get_file_contents_utf8_sync(this._bookmarksPath);
+        let bookmarksContent = Laminax.get_file_contents_utf8_sync(this._bookmarksPath);
 
         let bookmarks = bookmarksContent.split('\n');
 
@@ -513,13 +513,13 @@ PlacesManager.prototype = {
             let label = bookmarksToLabel[bookmark];
             let file = Gio.file_new_for_uri(bookmark);
             if (label == null)
-                label = Cinnamon.util_get_label_for_uri(bookmark);
+                label = Laminax.util_get_label_for_uri(bookmark);
             if (label == null)
                 continue;
 
             let item;
             if (file.query_exists(null)) {
-                let icon = Cinnamon.util_get_icon_for_uri(bookmark);
+                let icon = Laminax.util_get_icon_for_uri(bookmark);
                 item = new PlaceInfo('bookmark:' + bookmark, label,
                         function(size) {
                             return new St.Icon({ gicon: icon, icon_size: size });

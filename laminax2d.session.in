@@ -1,0 +1,6 @@
+[Laminax Session]
+Name=Laminax (Software Rendering)
+RequiredComponents=Laminax2d;org.Laminax.ScreenSaver;nemo-autostart;@REQUIRED@Laminax-killer-daemon;
+DesktopName=X-Laminax
+
+

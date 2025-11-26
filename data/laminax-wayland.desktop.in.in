@@ -1,0 +1,16 @@
+[Desktop Entry]
+Type=Application
+Name=Laminax (Wayland session)
+Comment=Window management and application launching
+Exec=Laminax --replace
+X-GNOME-Bugzilla-Bugzilla=GNOME
+X-GNOME-Bugzilla-Product=Laminax
+X-GNOME-Bugzilla-Component=general
+X-GNOME-Bugzilla-Version=@VERSION@
+Categories=GNOME;GTK;System;Core;
+OnlyShowIn=X-Laminax;
+NoDisplay=true
+X-GNOME-Autostart-Phase=DisplayServer
+X-GNOME-Provides=panel;windowmanager;
+X-GNOME-Autostart-Notify=true
+X-GNOME-AutoRestart=false

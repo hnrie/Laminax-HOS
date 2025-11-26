@@ -17,10 +17,10 @@ var KEY_LONG_PRESS_TIME = 250;
 var PANEL_SWITCH_ANIMATION_TIME = 500;
 var PANEL_SWITCH_RELATIVE_DISTANCE = 1 / 3; /* A third of the actor width */
 
-const A11Y_APPLICATIONS_SCHEMA = 'org.cinnamon.desktop.a11y.applications';
+const A11Y_APPLICATIONS_SCHEMA = 'org.Laminax.desktop.a11y.applications';
 const SHOW_KEYBOARD_KEY = 'screen-keyboard-enabled';
 
-const OSK_SETTINGS = 'org.cinnamon.keyboard';
+const OSK_SETTINGS = 'org.Laminax.keyboard';
 const ACTIVATION_MODE_KEY = 'activation-mode';
 const KEYBOARD_SIZE_KEY = 'keyboard-size';
 const KEYBOARD_POSITION_KEY = 'keyboard-position';
@@ -524,7 +524,7 @@ var KeyboardModel = class {
     }
 
     _loadModel(groupName) {
-        let file = Gio.File.new_for_uri('resource:///org/cinnamon/osk-layouts/%s.json'.format(groupName));
+        let file = Gio.File.new_for_uri('resource:///org/Laminax/osk-layouts/%s.json'.format(groupName));
         let [success_, contents] = file.load_contents(null);
         if (contents instanceof Uint8Array)
             contents = imports.byteArray.toString(contents);
@@ -954,7 +954,7 @@ class Keyboard extends St.BoxLayout {
                 this._showIdleId = 0;
                 return GLib.SOURCE_REMOVE;
             });
-            GLib.Source.set_name_by_id(this._showIdleId, '[cinnamon] this.open');
+            GLib.Source.set_name_by_id(this._showIdleId, '[Laminax] this.open');
         }
     }
 
@@ -1289,7 +1289,7 @@ class Keyboard extends St.BoxLayout {
                 this._open(monitor);
                 return GLib.SOURCE_REMOVE;
             });
-        GLib.Source.set_name_by_id(this._keyboardRestingId, '[cinnamon] this._clearKeyboardRestTimer');
+        GLib.Source.set_name_by_id(this._keyboardRestingId, '[Laminax] this._clearKeyboardRestTimer');
     }
 
     _open(monitor) {
@@ -1316,7 +1316,7 @@ class Keyboard extends St.BoxLayout {
                 this._close();
                 return GLib.SOURCE_REMOVE;
             });
-        GLib.Source.set_name_by_id(this._keyboardRestingId, '[cinnamon] this._clearKeyboardRestTimer');
+        GLib.Source.set_name_by_id(this._keyboardRestingId, '[Laminax] this._clearKeyboardRestTimer');
     }
 
     _close() {

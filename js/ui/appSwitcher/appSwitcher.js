@@ -7,7 +7,7 @@ const St = imports.gi.St;
 const Meta = imports.gi.Meta;
 const Mainloop = imports.mainloop;
 const Main = imports.ui.main;
-const Cinnamon = imports.gi.Cinnamon;
+const Laminax = imports.gi.Laminax;
 
 const DISABLE_HOVER_TIMEOUT = 500; // milliseconds
 
@@ -121,7 +121,7 @@ AppSwitcher.prototype = {
         }
         this._modifierMask = primaryModifier(binding.get_mask());
 
-        this._tracker = Cinnamon.WindowTracker.get_default();
+        this._tracker = Laminax.WindowTracker.get_default();
         this._windowManager = global.window_manager;
 
         this._dcid = this._windowManager.connect('destroy', Lang.bind(this, this._windowDestroyed));
@@ -263,7 +263,7 @@ AppSwitcher.prototype = {
     },
 
     _keyPressEvent: function (actor, event) {
-        let modifiers = Cinnamon.get_event_state(event);
+        let modifiers = Laminax.get_event_state(event);
         let symbol = event.get_key_symbol();
         let keycode = event.get_key_code();
         // This relies on the fact that Clutter.ModifierType is the same as Gdk.ModifierType

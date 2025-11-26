@@ -1,19 +1,19 @@
 /* -*- mode: C; c-file-style: "gnu"; indent-tabs-mode: nil; -*- */
 
 #define GST_USE_UNSTABLE_API
-#include "cinnamon-recorder.h"
+#include "Laminax-recorder.h"
 #include <clutter/clutter.h>
 #include <gst/gst.h>
 
-/* Very simple test of the CinnamonRecorder class; shows some text strings
+/* Very simple test of the LaminaxRecorder class; shows some text strings
  * moving around and records it.
  */
-static CinnamonRecorder *recorder;
+static LaminaxRecorder *recorder;
 
 static gboolean
 stop_recording_timeout (gpointer data)
 {
-  cinnamon_recorder_close (recorder);
+  Laminax_recorder_close (recorder);
   return FALSE;
 }
 
@@ -87,12 +87,12 @@ int main (int argc, char **argv)
 				     "y", 240,
 				     NULL);
 
-  recorder = cinnamon_recorder_new (CLUTTER_STAGE (stage));
-  cinnamon_recorder_set_filename (recorder, "test-recorder.ogg");
+  recorder = Laminax_recorder_new (CLUTTER_STAGE (stage));
+  Laminax_recorder_set_filename (recorder, "test-recorder.ogg");
 
   clutter_actor_show (stage);
 
-  cinnamon_recorder_record (recorder);
+  Laminax_recorder_record (recorder);
   clutter_main ();
 
   return 0;
